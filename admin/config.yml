@@ -9,7 +9,7 @@ collections:
   - name: "menu_management"
     label: "إدارة قائمة الطعام (المنيو)"
     files:
-      - label: "تعديل الأقسام والأسعار"
+      - label: "تعديل الأقسام والأسعار والصور"
         name: "menu_items"
         file: "menu.json"
         fields:
@@ -30,6 +30,10 @@ collections:
                   - label: "السعر"
                     name: "price"
                     widget: "string"
+                  - label: "صورة الوجبة"
+                    name: "image"
+                    widget: "image"
+                    required: false
                   - label: "الوصف"
                     name: "description"
                     widget: "text"
