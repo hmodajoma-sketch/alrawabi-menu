@@ -14,14 +14,23 @@ collections:
         file: "menu.json"
         fields:
           - label: "أقسام المنيو"
-            name: "categories"
+            name: "sections"
             widget: "list"
             fields:
-              - { label: "اسم القسم (مثال: بيتزا)", name: "category", widget: "string" }
-              - label: "الأصناف داخل القسم"
+              - label: "اسم القسم"
+                name: "section_name"
+                widget: "string"
+              - label: "الوجبات"
                 name: "items"
                 widget: "list"
                 fields:
-                  - { label: "اسم الصنف / الوجبة", name: "name", widget: "string" }
-                  - { label: "الوصف أو المكونات (اختياري)", name: "desc", widget: "string", required: false }
-                  - { label: "السعر (مثال: 35 د.ل)", name: "price", widget: "string" }
+                  - label: "اسم الوجبة"
+                    name: "name"
+                    widget: "string"
+                  - label: "السعر"
+                    name: "price"
+                    widget: "string"
+                  - label: "الوصف"
+                    name: "description"
+                    widget: "text"
+                    required: false
