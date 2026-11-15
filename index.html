@@ -36,13 +36,13 @@
             position: relative;
             background-size: cover;
             background-position: center;
+            background-color: #111;
             border-bottom: 2px solid var(--accent-gold);
             text-align: center;
             padding: 45px 20px 30px;
             overflow: hidden;
         }
 
-        /* Dark overlay to make text and logo readable over the background image */
         .hero-header::before {
             content: '';
             position: absolute;
@@ -50,7 +50,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(11, 11, 11, 0.9) 0%, rgba(11, 11, 11, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(11, 11, 11, 0.85) 0%, rgba(11, 11, 11, 0.95) 100%);
             z-index: 1;
         }
 
@@ -319,7 +319,7 @@
     <header class="hero-header" id="heroHeader">
         <div class="hero-content">
             <div class="logo-container">
-                <img src="images/2%D8%B4%D8%B9%D8%A7%D8%B1.jpg" alt="مطعم الروابي" class="logo-img" onerror="this.src='images/logo.jpg'">
+                <img src="images/logo.jpg" alt="مطعم الروابي" class="logo-img" onerror="this.style.display='none'">
             </div>
             <h1 class="restaurant-name">مطعم الروابي</h1>
             <p class="restaurant-subtitle">Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات الطازجة</p>
@@ -370,7 +370,6 @@
                 }
                 
                 if (sections && sections.length > 0) {
-                    // تعيين صورة الوجبة الأولى كخلفية للهيدر تلقائياً
                     for (let sec of sections) {
                         let items = sec.items || sec.menu_items || [];
                         if (items.length > 0 && items[0].image) {
