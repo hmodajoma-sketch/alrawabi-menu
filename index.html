@@ -11,12 +11,10 @@
             --surface-color: #161616;
             --card-bg: #1f1f1f;
             --accent-gold: #ffb703;
-            --accent-red: #e63946;
             --text-main: #ffffff;
             --text-muted: #9ca3af;
             --border-subtle: #2d2d2d;
             --radius-lg: 16px;
-            --radius-md: 12px;
         }
 
         * {
@@ -33,13 +31,32 @@
             padding-bottom: 100px;
         }
 
-        /* Hero Header */
+        /* Hero Header with Dynamic Background */
         .hero-header {
-            background: linear-gradient(180deg, rgba(22,22,22,0.95) 0%, rgba(11,11,11,1) 100%);
-            border-bottom: 1px solid var(--border-subtle);
-            text-align: center;
-            padding: 35px 20px 25px;
             position: relative;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid var(--accent-gold);
+            text-align: center;
+            padding: 45px 20px 30px;
+            overflow: hidden;
+        }
+
+        /* Dark overlay to make text and logo readable over the background image */
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(11, 11, 11, 0.9) 0%, rgba(11, 11, 11, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .logo-container {
@@ -53,7 +70,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(255, 183, 3, 0.2);
+            box-shadow: 0 10px 25px rgba(255, 183, 3, 0.3);
         }
 
         .logo-img {
@@ -63,11 +80,11 @@
         }
 
         .restaurant-name {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 900;
             color: var(--text-main);
             margin-bottom: 5px;
-            letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .restaurant-subtitle {
@@ -85,9 +102,9 @@
         }
 
         .action-chip {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(22, 22, 22, 0.8);
             color: var(--accent-gold);
-            border: 1px solid rgba(255, 183, 3, 0.3);
+            border: 1px solid rgba(255, 183, 3, 0.4);
             padding: 8px 16px;
             border-radius: 30px;
             font-size: 13px;
@@ -106,7 +123,7 @@
 
         /* Sticky Category Navigation */
         .categories-wrapper {
-            background: rgba(22, 22, 22, 0.9);
+            background: rgba(22, 22, 22, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-subtle);
             position: sticky;
@@ -299,24 +316,24 @@
 </head>
 <body>
 
-    <header class="hero-header">
-        <div class="logo-container">
-            <img src="images/2شعار.jpg" alt="مطعم الروابي" class="logo-img">
-        </div>
-        <h1 class="restaurant-name">مطعم الروابي</h1>
-        <p class="restaurant-subtitle">Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات الطازجة</p>
-        
-        <div class="action-bar">
-            <a href="tel:0921699747" class="action-chip">📞 0921699747</a>
-            <a href="tel:0931800053" class="action-chip">📞 0931800053</a>
-            <a href="tel:0941800053" class="action-chip">📞 0941800053</a>
+    <header class="hero-header" id="heroHeader">
+        <div class="hero-content">
+            <div class="logo-container">
+                <img src="images/2%D8%B4%D8%B9%D8%A7%D8%B1.jpg" alt="مطعم الروابي" class="logo-img" onerror="this.src='images/logo.jpg'">
+            </div>
+            <h1 class="restaurant-name">مطعم الروابي</h1>
+            <p class="restaurant-subtitle">Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات الطازجة</p>
+            
+            <div class="action-bar">
+                <a href="tel:0921699747" class="action-chip">📞 0921699747</a>
+                <a href="tel:0931800053" class="action-chip">📞 0931800053</a>
+                <a href="tel:0941800053" class="action-chip">📞 0941800053</a>
+            </div>
         </div>
     </header>
 
     <div class="categories-wrapper">
-        <nav class="categories-nav" id="catNav">
-            <!-- Dynamic Categories -->
-        </nav>
+        <nav class="categories-nav" id="catNav"></nav>
     </div>
 
     <main class="container" id="menuContainer">
@@ -331,6 +348,7 @@
     <script>
         const catNav = document.getElementById('catNav');
         const menuContainer = document.getElementById('menuContainer');
+        const heroHeader = document.getElementById('heroHeader');
 
         async function loadMenu() {
             try {
@@ -352,6 +370,14 @@
                 }
                 
                 if (sections && sections.length > 0) {
+                    // تعيين صورة الوجبة الأولى كخلفية للهيدر تلقائياً
+                    for (let sec of sections) {
+                        let items = sec.items || sec.menu_items || [];
+                        if (items.length > 0 && items[0].image) {
+                            heroHeader.style.backgroundImage = `url('${items[0].image}')`;
+                            break;
+                        }
+                    }
                     renderMenu(sections);
                 } else {
                     menuContainer.innerHTML = '<div class="error-state">لا توجد أقسام مضافة حالياً في القائمة.</div>';
@@ -369,7 +395,6 @@
             sections.forEach((section, index) => {
                 const secName = section.section_name || section.name || `قسم ${index + 1}`;
                 
-                // Create Navigation Button
                 const btn = document.createElement('button');
                 btn.className = `cat-btn ${index === 0 ? 'active' : ''}`;
                 btn.innerText = secName;
@@ -382,7 +407,6 @@
 
                 const items = section.items || section.menu_items || [];
 
-                // Create Section Block
                 const sectionDiv = document.createElement('div');
                 sectionDiv.className = 'section-block';
                 sectionDiv.id = `sec-${index}`;
