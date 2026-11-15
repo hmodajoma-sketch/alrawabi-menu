@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة إدارة المنيو السهلة - مطعم الروابي</title>
+    <title>لوحة إدارة القائمة المباشرة - مطعم الروابي</title>
     <style>
         body {
             font-family: Tahoma, Arial, sans-serif;
@@ -11,7 +11,7 @@
             color: #f0f0f0;
             margin: 0;
             padding: 20px;
-            padding-bottom: 90px;
+            padding-bottom: 100px;
         }
         .container {
             max-width: 850px;
@@ -20,8 +20,15 @@
         h1 {
             color: #ff5722;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-size: 24px;
+        }
+        .settings-box {
+            background: #1e1e1e;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
         }
         .section-card {
             background: #1e1e1e;
@@ -38,12 +45,6 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid #333;
-        }
-        .section-header input {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ff5722;
-            background: #252525;
         }
         .item-box {
             background: #262626;
@@ -74,7 +75,6 @@
             color: #fff;
             border-radius: 6px;
             box-sizing: border-box;
-            font-family: inherit;
             font-size: 14px;
         }
         input:focus {
@@ -87,7 +87,6 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-family: inherit;
             font-size: 14px;
         }
         .btn-add {
@@ -96,7 +95,6 @@
             width: 100%;
             margin-top: 5px;
         }
-        .btn-add:hover { background: #1b5e20; }
         .btn-add-sec {
             background: #1565c0;
             color: white;
@@ -105,14 +103,12 @@
             font-size: 16px;
             margin-bottom: 20px;
         }
-        .btn-add-sec:hover { background: #0d47a1; }
         .btn-del {
             background: #c62828;
             color: white;
             padding: 8px 12px;
             font-size: 12px;
         }
-        .btn-del:hover { background: #8e0000; }
         .floating-save {
             position: fixed;
             bottom: 0;
@@ -123,6 +119,10 @@
             border-top: 2px solid #ff5722;
             text-align: center;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
         }
         .btn-save {
             background: #ff5722;
@@ -130,37 +130,61 @@
             font-size: 18px;
             padding: 12px 40px;
             border-radius: 8px;
-            max-width: 500px;
-            width: 100%;
+            cursor: pointer;
         }
         .btn-save:hover { background: #e64a19; }
+        #statusMsg {
+            font-weight: bold;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>إدارة قائمة طعام الروابي</h1>
-    <div id="menuEditor">جارٍ تحميل القائمة...</div>
+    <h1>لوحة إدارة قائمة طعام الروابي (مباشرة)</h1>
+
+    <div class="settings-box">
+        <label><b>رمز الربط السري (GitHub Token):</b> (يتم حفظه تلقائياً في متصفحك)</label>
+        <input type="password" id="ghToken" placeholder="الصق رمز الـ Token هنا (ghp_...)" style="margin-top:5px;">
+    </div>
+
+    <div id="menuEditor">جارٍ تحميل القائمة من المستودع...</div>
     <button class="btn btn-add-sec" onclick="addSection()">+ إضافة قسم جديد للمنيو</button>
 </div>
 
 <div class="floating-save">
-    <button class="btn btn-save" onclick="downloadMenu()">حفظ وتحميل ملف المنيو الجديد (menu.json)</button>
+    <button class="btn btn-save" onclick="saveToGitHub()">حفظ التغييرات وتحديث الموقع فوراً</button>
+    <span id="statusMsg"></span>
 </div>
 
 <script>
-    let menuData = { sections: [] };
+    const owner = "hmodajoma-sketch";
+    const repo = "alrawabi-menu";
+    const path = "menu.json";
+    const branch = "main";
 
-    // تحميل البيانات الحالية وعرضها كبطاقات سهلة
-    fetch('menu.json?v=' + new Date().getTime())
-        .then(res => res.json())
-        .then(data => {
-            menuData = data;
-            renderEditor();
-        })
-        .catch(() => {
-            document.getElementById('menuEditor').innerHTML = '<p style="color:#ff5722;text-align:center;">تعذر تحميل ملف menu.json الحالي.</p>';
-        });
+    let menuData = { sections: [] };
+    let fileSha = "";
+
+    window.onload = function() {
+        if(localStorage.getItem('gh_token')) {
+            document.getElementById('ghToken').value = localStorage.getItem('gh_token');
+        }
+        loadMenu();
+    };
+
+    function loadMenu() {
+        fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                menuData = data;
+                renderEditor();
+            })
+            .catch(() => {
+                document.getElementById('menuEditor').innerHTML = '<p style="color:#ff5722;text-align:center;">تعذر تحميل القائمة.</p>';
+            });
+    }
 
     function renderEditor() {
         const container = document.getElementById('menuEditor');
@@ -189,7 +213,7 @@
                         </div>
                         <div class="row" style="align-items: flex-end;">
                             <div class="field">
-                                <label>رابط أو مسار الصورة (اختياري)</label>
+                                <label>رابط الصورة</label>
                                 <input type="text" dir="ltr" value="${item.image || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].image = this.value">
                             </div>
                             <button class="btn btn-del" onclick="deleteItem(${sIndex}, ${iIndex})">حذف الوجبة</button>
@@ -215,12 +239,7 @@
     }
 
     function addItem(sIndex) {
-        menuData.sections[sIndex].items.push({
-            name: "وجبة جديدة",
-            price: "0 د.ل",
-            description: "",
-            image: ""
-        });
+        menuData.sections[sIndex].items.push({ name: "وجبة جديدة", price: "0 د.ل", description: "", image: "" });
         renderEditor();
     }
 
@@ -232,10 +251,7 @@
     }
 
     function addSection() {
-        menuData.sections.push({
-            section_name: "قسم جديد",
-            items: []
-        });
+        menuData.sections.push({ section_name: "قسم جديد", items: [] });
         renderEditor();
     }
 
@@ -246,17 +262,56 @@
         }
     }
 
-    function downloadMenu() {
-        const textData = JSON.stringify(menuData, null, 4);
-        const blob = new Blob([textData], { type: 'application/json;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'menu.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+    async function saveToGitHub() {
+        const token = document.getElementById('ghToken').value.trim();
+        const msgElem = document.getElementById('statusMsg');
+
+        if (!token) {
+            alert('الرجاء إدخال رمز GitHub Token في الأعلى أولاً!');
+            return;
+        }
+
+        localStorage.setItem('gh_token', token);
+
+        msgElem.style.color = "#ffeb3b";
+        msgElem.innerText = "جاري الحفظ وتحديث الموقع...";
+
+        try {
+            const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                headers: { "Authorization": `token ${token}` }
+            });
+            const fileData = await getRes.json();
+            fileSha = fileData.sha;
+
+            const jsonString = JSON.stringify(menuData, null, 4);
+            const contentEncoded = btoa(unescape(encodeURIComponent(jsonString)));
+
+            const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: "Update menu.json via Direct Admin Panel",
+                    content: contentEncoded,
+                    sha: fileSha,
+                    branch: branch
+                })
+            });
+
+            if (putRes.ok) {
+                msgElem.style.color = "#4caf50";
+                msgElem.innerText = "تم الحفظ وتحديث الموقع بنجاح! 🎉";
+                setTimeout(() => { msgElem.innerText = ""; }, 4000);
+            } else {
+                const errJson = await putRes.json();
+                throw new Error(errJson.message || "فشل التحديث");
+            }
+        } catch (error) {
+            msgElem.style.color = "#f44336";
+            msgElem.innerText = "خطأ: " + error.message;
+        }
     }
 </script>
 
