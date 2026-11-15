@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة إدارة المنيو - مطعم الروابي</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h2 {
+            color: #ff5722;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #ff5722;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            background: #2c2c2c;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: monospace;
+        }
+        textarea {
+            height: 300px;
+            direction: ltr;
+            text-align: left;
+        }
+        button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #e64a19;
+        }
+        .note {
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>إدارة وتحديث قائمة طعام الروابي (menu.json)</h2>
+    
+    <label for="jsonInput">محتويات ملف القائمة (JSON Data):</label>
+    <textarea id="jsonInput" placeholder="جارٍ تحميل البيانات..."></textarea>
+    <div class="note">يمكنك تعديل الأسماء، الوصف، والأسعار مباشرة هنا ثم تحميل الملف المحدث.</div>
+
+    <button onclick="downloadMenuJson()">تحميل ملف المنيو المحدث (menu.json)</button>
+</div>
+
+<script>
+    // جلب ملف menu.json الحالي تلقائياً عند فتح الصفحة
+    fetch('menu.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('jsonInput').value = JSON.stringify(data, null, 4);
+        })
+        .catch(error => {
+            console.error('خطأ في جلب ملف المنيو:', error);
+            document.getElementById('jsonInput').value = '// تعذر جلب ملف menu.json، تأكد من مساره في المستودع';
+        });
+
+    function downloadMenuJson() {
+        const textData = document.getElementById('jsonInput').value;
+        const blob = new Blob([textData], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'menu.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+</script>
+
+</body>
+</html>
