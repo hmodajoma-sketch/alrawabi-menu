@@ -3,99 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة إدارة المنيو - مطعم الروابي</title>
+    <title>لوحة إدارة المنيو السهلة - مطعم الروابي</title>
     <style>
         body {
-            font-family: Tahoma, sans-serif;
+            font-family: Tahoma, Arial, sans-serif;
             background-color: #121212;
-            color: #e0e0e0;
-            padding: 20px;
+            color: #f0f0f0;
             margin: 0;
+            padding: 20px;
+            padding-bottom: 90px;
         }
         .container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        h2 {
+        h1 {
             color: #ff5722;
             text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .section-card {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .section-header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        .section-header input {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff5722;
+            background: #252525;
+        }
+        .item-box {
+            background: #262626;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-right: 4px solid #ff5722;
+        }
+        .row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .field {
+            flex: 1;
         }
         label {
             display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #ff5722;
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 4px;
         }
-        textarea, input {
+        input {
             width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            background: #2c2c2c;
+            padding: 10px;
+            background: #181818;
             border: 1px solid #444;
             color: #fff;
-            border-radius: 5px;
+            border-radius: 6px;
             box-sizing: border-box;
-            font-family: monospace;
+            font-family: inherit;
+            font-size: 14px;
         }
-        textarea {
-            height: 300px;
-            direction: ltr;
-            text-align: left;
+        input:focus {
+            border-color: #ff5722;
+            outline: none;
         }
-        button {
-            background-color: #ff5722;
-            color: white;
+        .btn {
             border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 5px;
+            padding: 10px 15px;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
             font-weight: bold;
-            transition: background 0.3s;
+            font-family: inherit;
+            font-size: 14px;
         }
-        button:hover {
-            background-color: #e64a19;
+        .btn-add {
+            background: #2e7d32;
+            color: white;
+            width: 100%;
+            margin-top: 5px;
         }
-        .note {
-            font-size: 13px;
-            color: #aaa;
-            margin-top: 8px;
+        .btn-add:hover { background: #1b5e20; }
+        .btn-add-sec {
+            background: #1565c0;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            margin-bottom: 20px;
         }
+        .btn-add-sec:hover { background: #0d47a1; }
+        .btn-del {
+            background: #c62828;
+            color: white;
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+        .btn-del:hover { background: #8e0000; }
+        .floating-save {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #181818;
+            padding: 15px;
+            border-top: 2px solid #ff5722;
+            text-align: center;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
+        }
+        .btn-save {
+            background: #ff5722;
+            color: white;
+            font-size: 18px;
+            padding: 12px 40px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+        }
+        .btn-save:hover { background: #e64a19; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>إدارة وتحديث قائمة طعام الروابي (menu.json)</h2>
-    
-    <label for="jsonInput">محتويات ملف القائمة (JSON Data):</label>
-    <textarea id="jsonInput" placeholder="جارٍ تحميل البيانات..."></textarea>
-    <div class="note">يمكنك تعديل الأسماء، الوصف، والأسعار مباشرة هنا ثم تحميل الملف المحدث.</div>
+    <h1>إدارة قائمة طعام الروابي</h1>
+    <div id="menuEditor">جارٍ تحميل القائمة...</div>
+    <button class="btn btn-add-sec" onclick="addSection()">+ إضافة قسم جديد للمنيو</button>
+</div>
 
-    <button onclick="downloadMenuJson()">تحميل ملف المنيو المحدث (menu.json)</button>
+<div class="floating-save">
+    <button class="btn btn-save" onclick="downloadMenu()">حفظ وتحميل ملف المنيو الجديد (menu.json)</button>
 </div>
 
 <script>
-    // جلب ملف menu.json الحالي تلقائياً عند فتح الصفحة
-    fetch('menu.json')
-        .then(response => response.json())
+    let menuData = { sections: [] };
+
+    // تحميل البيانات الحالية وعرضها كبطاقات سهلة
+    fetch('menu.json?v=' + new Date().getTime())
+        .then(res => res.json())
         .then(data => {
-            document.getElementById('jsonInput').value = JSON.stringify(data, null, 4);
+            menuData = data;
+            renderEditor();
         })
-        .catch(error => {
-            console.error('خطأ في جلب ملف المنيو:', error);
-            document.getElementById('jsonInput').value = '// تعذر جلب ملف menu.json، تأكد من مساره في المستودع';
+        .catch(() => {
+            document.getElementById('menuEditor').innerHTML = '<p style="color:#ff5722;text-align:center;">تعذر تحميل ملف menu.json الحالي.</p>';
         });
 
-    function downloadMenuJson() {
-        const textData = document.getElementById('jsonInput').value;
+    function renderEditor() {
+        const container = document.getElementById('menuEditor');
+        container.innerHTML = '';
+
+        menuData.sections.forEach((section, sIndex) => {
+            let itemsHtml = '';
+            section.items.forEach((item, iIndex) => {
+                itemsHtml += `
+                    <div class="item-box">
+                        <div class="row">
+                            <div class="field" style="flex: 2;">
+                                <label>اسم الوجبة</label>
+                                <input type="text" value="${item.name || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].name = this.value">
+                            </div>
+                            <div class="field" style="flex: 1;">
+                                <label>السعر</label>
+                                <input type="text" value="${item.price || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].price = this.value">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="field">
+                                <label>الوصف والمكونات</label>
+                                <input type="text" value="${item.description || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].description = this.value">
+                            </div>
+                        </div>
+                        <div class="row" style="align-items: flex-end;">
+                            <div class="field">
+                                <label>رابط أو مسار الصورة (اختياري)</label>
+                                <input type="text" dir="ltr" value="${item.image || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].image = this.value">
+                            </div>
+                            <button class="btn btn-del" onclick="deleteItem(${sIndex}, ${iIndex})">حذف الوجبة</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML += `
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="field">
+                            <label>اسم القسم</label>
+                            <input type="text" value="${section.section_name || ''}" oninput="menuData.sections[${sIndex}].section_name = this.value">
+                        </div>
+                        <button class="btn btn-del" style="margin-top:16px;" onclick="deleteSection(${sIndex})">حذف القسم</button>
+                    </div>
+                    ${itemsHtml}
+                    <button class="btn btn-add" onclick="addItem(${sIndex})">+ إضافة وجبة جديدة في هذا القسم</button>
+                </div>
+            `;
+        });
+    }
+
+    function addItem(sIndex) {
+        menuData.sections[sIndex].items.push({
+            name: "وجبة جديدة",
+            price: "0 د.ل",
+            description: "",
+            image: ""
+        });
+        renderEditor();
+    }
+
+    function deleteItem(sIndex, iIndex) {
+        if (confirm('هل أنت متأكد من حذف هذه الوجبة؟')) {
+            menuData.sections[sIndex].items.splice(iIndex, 1);
+            renderEditor();
+        }
+    }
+
+    function addSection() {
+        menuData.sections.push({
+            section_name: "قسم جديد",
+            items: []
+        });
+        renderEditor();
+    }
+
+    function deleteSection(sIndex) {
+        if (confirm('هل أنت متأكد من حذف هذا القسم بالكامل؟')) {
+            menuData.sections.splice(sIndex, 1);
+            renderEditor();
+        }
+    }
+
+    function downloadMenu() {
+        const textData = JSON.stringify(menuData, null, 4);
         const blob = new Blob([textData], { type: 'application/json;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
