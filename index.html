@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم الروابي - Alrawabi Menu</title>
+    <title>مطعم الروابي - Alrawabi Restaurant</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #121212;
-            --card-bg: #1e1e1e;
+            --card-bg: #1a1a1a;
             --primary-red: #e53935;
-            --primary-orange: #ff9800;
+            --primary-orange: #ff5722;
             --text-color: #ffffff;
             --text-muted: #b0b0b0;
-            --border-color: #333333;
+            --border-color: #2c2c2c;
         }
 
         * {
@@ -27,82 +27,73 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 90px;
+            padding-bottom: 95px;
         }
 
         header {
-            background: linear-gradient(135deg, #1a1a1a, #000000);
-            border-bottom: 4px solid var(--primary-red);
+            background: linear-gradient(135deg, #181818, #0a0a0a);
+            border-bottom: 3px solid var(--primary-red);
             text-align: center;
-            padding: 25px 20px;
+            padding: 30px 15px;
         }
 
-        .logo-container {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 12px;
-            background: var(--primary-red);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: 900;
-            color: white;
-            box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
-            border: 2px solid var(--primary-orange);
+        .logo-img {
+            max-width: 140px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 10px rgba(229, 57, 53, 0.4));
         }
 
         header h1 {
-            font-size: 26px;
+            font-size: 24px;
             color: white;
-            margin-bottom: 3px;
+            font-weight: 900;
+            margin-bottom: 5px;
         }
 
         header p {
             color: var(--text-muted);
             font-size: 13px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .contact-bar {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 10px;
         }
 
         .contact-btn {
-            background: #252525;
+            background: rgba(255, 255, 255, 0.05);
             color: var(--primary-orange);
-            border: 1px solid var(--primary-orange);
-            padding: 6px 12px;
+            border: 1px solid rgba(255, 87, 34, 0.4);
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 700;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             transition: all 0.3s;
         }
 
         .contact-btn:hover {
             background: var(--primary-orange);
-            color: black;
+            color: white;
         }
 
         .categories-nav {
             display: flex;
             overflow-x: auto;
             gap: 10px;
-            padding: 15px;
-            background: #181818;
+            padding: 12px 15px;
+            background: #161616;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
             scrollbar-width: none;
         }
 
@@ -111,11 +102,11 @@
         }
 
         .cat-btn {
-            background: #252525;
+            background: #222;
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 8px 18px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 25px;
             white-space: nowrap;
             cursor: pointer;
             font-size: 14px;
@@ -127,20 +118,20 @@
             background: var(--primary-red);
             border-color: var(--primary-orange);
             color: white;
-            box-shadow: 0 2px 8px rgba(229, 57, 53, 0.4);
+            box-shadow: 0 3px 10px rgba(229, 57, 53, 0.4);
         }
 
         .container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 20px auto;
             padding: 0 15px;
         }
 
         .section-title {
-            font-size: 22px;
+            font-size: 20px;
             color: var(--primary-orange);
-            margin: 30px 0 15px;
-            padding-bottom: 5px;
+            margin: 35px 0 15px;
+            padding-bottom: 8px;
             border-bottom: 2px dashed var(--border-color);
             display: flex;
             align-items: center;
@@ -156,7 +147,7 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 12px 15px;
+            padding: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -168,14 +159,14 @@
             border-color: var(--primary-red);
         }
 
-        /* تنسيق صورة الوجبة الجديدة */
         .item-img {
-            width: 75px;
-            height: 75px;
+            width: 80px;
+            height: 80px;
             object-fit: cover;
             border-radius: 10px;
             border: 1px solid var(--border-color);
             flex-shrink: 0;
+            background: #000;
         }
 
         .item-info {
@@ -186,7 +177,7 @@
             font-size: 16px;
             font-weight: 700;
             color: white;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .item-desc {
@@ -195,13 +186,13 @@
         }
 
         .item-price {
-            background: rgba(229, 57, 53, 0.1);
+            background: rgba(229, 57, 53, 0.12);
             color: var(--primary-orange);
             font-size: 16px;
             font-weight: 900;
-            padding: 6px 14px;
+            padding: 8px 14px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 152, 0, 0.3);
+            border: 1px solid rgba(255, 87, 34, 0.3);
             white-space: nowrap;
         }
 
@@ -217,14 +208,14 @@
             justify-content: center;
             gap: 12px;
             z-index: 2000;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
         }
 
         .float-btn {
             background: var(--primary-red);
             color: white;
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 30px;
             font-weight: 700;
             font-size: 14px;
@@ -232,13 +223,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 10px rgba(229, 57, 53, 0.4);
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
             transition: transform 0.2s;
         }
 
         .float-btn.whatsapp {
             background: #25d366;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
         }
 
         .float-btn:active {
@@ -249,7 +240,8 @@
 <body>
 
     <header>
-        <div class="logo-container">الروابي</div>
+        <!-- تم دمج شعارك الجديد هنا -->
+        <img src="images/2شعار.jpg" alt="مطعم الروابي" class="logo-img">
         <h1>مطعم الروابي</h1>
         <p>Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات</p>
         
