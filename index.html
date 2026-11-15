@@ -240,7 +240,6 @@
 <body>
 
     <header>
-        <!-- تم دمج شعارك الجديد هنا -->
         <img src="images/2شعار.jpg" alt="مطعم الروابي" class="logo-img">
         <h1>مطعم الروابي</h1>
         <p>Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات</p>
@@ -267,14 +266,32 @@
 
         async function loadMenu() {
             try {
-                const response = await fetch('menu.json');
+                // منع التخزين المؤقت لجلب أحدث بيانات menu.json فوراً
+                const response = await fetch('menu.json?t=' + Date.now());
                 const data = await response.json();
                 
-                if (data && data.sections) {
-                    renderMenu(data.sections);
+                let sections = [];
+                if (Array.isArray(data)) {
+                    sections = data;
+                } else if (data.sections) {
+                    sections = data.sections;
+                } else if (data.menu_items) {
+                    sections = data.menu_items;
+                } else {
+                    const possibleKey = Object.keys(data).find(key => Array.isArray(data[key]));
+                    if (possibleKey) {
+                        sections = data[possibleKey];
+                    }
+                }
+                
+                if (sections && sections.length > 0) {
+                    renderMenu(sections);
+                } else {
+                    menuContainer.innerHTML = '<p style="text-align:center; color:#b0b0b0; padding:25px;">لا توجد أقسام مضافة حالياً في المنيو.</p>';
                 }
             } catch (error) {
                 console.error('Error loading menu data:', error);
+                menuContainer.innerHTML = '<p style="text-align:center; color:#e53935; padding:25px;">خطأ في قراءة ملف البيانات.</p>';
             }
         }
 
@@ -285,7 +302,7 @@
             sections.forEach((section, index) => {
                 const btn = document.createElement('button');
                 btn.className = `cat-btn ${index === 0 ? 'active' : ''}`;
-                btn.innerText = section.section_name;
+                btn.innerText = section.section_name || section.name || `قسم ${index + 1}`;
                 btn.onclick = () => {
                     document.getElementById(`sec-${index}`).scrollIntoView({ behavior: 'smooth' });
                     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -293,12 +310,14 @@
                 };
                 catNav.appendChild(btn);
 
+                const items = section.items || section.menu_items || [];
+
                 const sectionDiv = document.createElement('div');
                 sectionDiv.id = `sec-${index}`;
                 sectionDiv.innerHTML = `
-                    <h2 class="section-title">🔥 ${section.section_name}</h2>
+                    <h2 class="section-title">🔥 ${section.section_name || section.name || ''}</h2>
                     <div class="menu-grid">
-                        ${section.items.map(item => `
+                        ${items.map(item => `
                             <div class="menu-item">
                                 ${item.image ? `<img src="${item.image}" alt="${item.name}" class="item-img">` : ''}
                                 <div class="item-info">
