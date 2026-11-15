@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم الروابي - Alrawabi Restaurant</title>
+    <title>مطعم الروابي | Alrawabi Restaurant</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1a1a1a;
-            --primary-red: #e53935;
-            --primary-orange: #ff5722;
-            --text-color: #ffffff;
-            --text-muted: #b0b0b0;
-            --border-color: #2c2c2c;
+            --bg-color: #0b0b0b;
+            --surface-color: #161616;
+            --card-bg: #1f1f1f;
+            --accent-gold: #ffb703;
+            --accent-red: #e63946;
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            --border-subtle: #2d2d2d;
+            --radius-lg: 16px;
+            --radius-md: 12px;
         }
 
         * {
@@ -25,75 +28,98 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 95px;
+            padding-bottom: 100px;
         }
 
-        header {
-            background: linear-gradient(135deg, #181818, #0a0a0a);
-            border-bottom: 3px solid var(--primary-red);
+        /* Hero Header */
+        .hero-header {
+            background: linear-gradient(180deg, rgba(22,22,22,0.95) 0%, rgba(11,11,11,1) 100%);
+            border-bottom: 1px solid var(--border-subtle);
             text-align: center;
-            padding: 30px 15px;
+            padding: 35px 20px 25px;
+            position: relative;
+        }
+
+        .logo-container {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: var(--surface-color);
+            border: 2px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(255, 183, 3, 0.2);
         }
 
         .logo-img {
-            max-width: 140px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 4px 10px rgba(229, 57, 53, 0.4));
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        header h1 {
-            font-size: 24px;
-            color: white;
+        .restaurant-name {
+            font-size: 26px;
             font-weight: 900;
+            color: var(--text-main);
             margin-bottom: 5px;
+            letter-spacing: 0.5px;
         }
 
-        header p {
+        .restaurant-subtitle {
             color: var(--text-muted);
             font-size: 13px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
-        .contact-bar {
+        /* Contact Action Bar */
+        .action-bar {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .contact-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--primary-orange);
-            border: 1px solid rgba(255, 87, 34, 0.4);
-            padding: 6px 14px;
-            border-radius: 20px;
+        .action-chip {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--accent-gold);
+            border: 1px solid rgba(255, 183, 3, 0.3);
+            padding: 8px 16px;
+            border-radius: 30px;
             font-size: 13px;
             font-weight: 700;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .contact-btn:hover {
-            background: var(--primary-orange);
-            color: white;
+        .action-chip:hover {
+            background: var(--accent-gold);
+            color: #000;
+        }
+
+        /* Sticky Category Navigation */
+        .categories-wrapper {
+            background: rgba(22, 22, 22, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 0;
         }
 
         .categories-nav {
             display: flex;
             overflow-x: auto;
             gap: 10px;
-            padding: 12px 15px;
-            background: #161616;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            padding: 0 15px;
             scrollbar-width: none;
         }
 
@@ -102,162 +128,204 @@
         }
 
         .cat-btn {
-            background: #222;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
+            background: var(--surface-color);
+            color: var(--text-muted);
+            border: 1px solid var(--border-subtle);
             padding: 8px 20px;
             border-radius: 25px;
             white-space: nowrap;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             transition: all 0.3s ease;
         }
 
         .cat-btn.active, .cat-btn:hover {
-            background: var(--primary-red);
-            border-color: var(--primary-orange);
-            color: white;
-            box-shadow: 0 3px 10px rgba(229, 57, 53, 0.4);
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
         }
 
+        /* Main Container */
         .container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 20px auto;
             padding: 0 15px;
         }
 
-        .section-title {
+        .section-block {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
             font-size: 20px;
-            color: var(--primary-orange);
-            margin: 35px 0 15px;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 18px;
             padding-bottom: 8px;
-            border-bottom: 2px dashed var(--border-color);
+            border-bottom: 2px solid var(--border-subtle);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
+        /* Menu Grid & Cards */
         .menu-grid {
             display: grid;
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
 
-        .menu-item {
+        .menu-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.2s, border-color 0.2s;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        .menu-item:hover {
-            border-color: var(--primary-red);
+        .menu-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
         }
 
-        .item-img {
-            width: 80px;
-            height: 80px;
+        .card-img-wrapper {
+            width: 100%;
+            height: 180px;
+            background: #111;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            flex-shrink: 0;
-            background: #000;
+            transition: transform 0.5s ease;
         }
 
-        .item-info {
+        .menu-card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
             flex-grow: 1;
         }
 
-        .item-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 4px;
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 12px;
         }
 
-        .item-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .item-price {
-            background: rgba(229, 57, 53, 0.12);
-            color: var(--primary-orange);
-            font-size: 16px;
+        .card-price {
+            font-size: 17px;
             font-weight: 900;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 87, 34, 0.3);
-            white-space: nowrap;
+            color: var(--accent-gold);
         }
 
+        /* Floating Order Footer */
         .floating-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(18, 18, 18, 0.95);
-            border-top: 2px solid var(--primary-red);
-            padding: 10px 15px;
+            background: rgba(11, 11, 11, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-subtle);
+            padding: 12px 20px;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             z-index: 2000;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
         }
 
-        .float-btn {
-            background: var(--primary-red);
-            color: white;
-            padding: 10px 22px;
+        .float-action-btn {
+            background: var(--accent-gold);
+            color: #000;
+            padding: 10px 24px;
             border-radius: 30px;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 14px;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
             transition: transform 0.2s;
         }
 
-        .float-btn.whatsapp {
+        .float-action-btn.whatsapp {
             background: #25d366;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
-        .float-btn:active {
-            transform: scale(0.95);
+        .float-action-btn:active {
+            transform: scale(0.96);
+        }
+
+        .loading-state, .error-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 15px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="images/2شعار.jpg" alt="مطعم الروابي" class="logo-img">
-        <h1>مطعم الروابي</h1>
-        <p>Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات</p>
+    <header class="hero-header">
+        <div class="logo-container">
+            <img src="images/2شعار.jpg" alt="مطعم الروابي" class="logo-img">
+        </div>
+        <h1 class="restaurant-name">مطعم الروابي</h1>
+        <p class="restaurant-subtitle">Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات الطازجة</p>
         
-        <div class="contact-bar">
-            <a href="tel:0921699747" class="contact-btn">📞 0921699747</a>
-            <a href="tel:0931800053" class="contact-btn">📞 0931800053</a>
-            <a href="tel:0941800053" class="contact-btn">📞 0941800053</a>
+        <div class="action-bar">
+            <a href="tel:0921699747" class="action-chip">📞 0921699747</a>
+            <a href="tel:0931800053" class="action-chip">📞 0931800053</a>
+            <a href="tel:0941800053" class="action-chip">📞 0941800053</a>
         </div>
     </header>
 
-    <div class="categories-nav" id="catNav"></div>
+    <div class="categories-wrapper">
+        <nav class="categories-nav" id="catNav">
+            <!-- Dynamic Categories -->
+        </nav>
+    </div>
 
-    <div class="container" id="menuContainer"></div>
+    <main class="container" id="menuContainer">
+        <div class="loading-state">جاري تحميل قائمة الطعام الفاخرة...</div>
+    </main>
 
     <div class="floating-footer">
-        <a href="tel:0921699747" class="float-btn">📞 اتصل للطلب</a>
-        <a href="https://wa.me/218921699747" target="_blank" class="float-btn whatsapp">💬 اطلب عبر واتساب</a>
+        <a href="tel:0921699747" class="float-action-btn">📞 اتصل للطلب</a>
+        <a href="https://wa.me/218921699747" target="_blank" class="float-action-btn whatsapp">💬 اطلب عبر واتساب</a>
     </div>
 
     <script>
@@ -266,7 +334,6 @@
 
         async function loadMenu() {
             try {
-                // منع التخزين المؤقت لجلب أحدث بيانات menu.json فوراً
                 const response = await fetch('menu.json?t=' + Date.now());
                 const data = await response.json();
                 
@@ -287,11 +354,11 @@
                 if (sections && sections.length > 0) {
                     renderMenu(sections);
                 } else {
-                    menuContainer.innerHTML = '<p style="text-align:center; color:#b0b0b0; padding:25px;">لا توجد أقسام مضافة حالياً في المنيو.</p>';
+                    menuContainer.innerHTML = '<div class="error-state">لا توجد أقسام مضافة حالياً في القائمة.</div>';
                 }
             } catch (error) {
                 console.error('Error loading menu data:', error);
-                menuContainer.innerHTML = '<p style="text-align:center; color:#e53935; padding:25px;">خطأ في قراءة ملف البيانات.</p>';
+                menuContainer.innerHTML = '<div class="error-state">عفواً، حدث خطأ أثناء تحميل بيانات القائمة.</div>';
             }
         }
 
@@ -300,11 +367,14 @@
             menuContainer.innerHTML = '';
 
             sections.forEach((section, index) => {
+                const secName = section.section_name || section.name || `قسم ${index + 1}`;
+                
+                // Create Navigation Button
                 const btn = document.createElement('button');
                 btn.className = `cat-btn ${index === 0 ? 'active' : ''}`;
-                btn.innerText = section.section_name || section.name || `قسم ${index + 1}`;
+                btn.innerText = secName;
                 btn.onclick = () => {
-                    document.getElementById(`sec-${index}`).scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById(`sec-${index}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
                     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                 };
@@ -312,19 +382,29 @@
 
                 const items = section.items || section.menu_items || [];
 
+                // Create Section Block
                 const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'section-block';
                 sectionDiv.id = `sec-${index}`;
                 sectionDiv.innerHTML = `
-                    <h2 class="section-title">🔥 ${section.section_name || section.name || ''}</h2>
+                    <h2 class="section-header">✨ ${secName}</h2>
                     <div class="menu-grid">
                         ${items.map(item => `
-                            <div class="menu-item">
-                                ${item.image ? `<img src="${item.image}" alt="${item.name}" class="item-img">` : ''}
-                                <div class="item-info">
-                                    <div class="item-name">${item.name}</div>
-                                    ${item.description ? `<div class="item-desc">${item.description}</div>` : ''}
+                            <div class="menu-card">
+                                ${item.image ? `
+                                    <div class="card-img-wrapper">
+                                        <img src="${item.image}" alt="${item.name || ''}" class="card-img" loading="lazy">
+                                    </div>
+                                ` : ''}
+                                <div class="card-body">
+                                    <div>
+                                        <div class="card-title">${item.name || ''}</div>
+                                        ${item.description ? `<div class="card-desc">${item.description}</div>` : ''}
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="card-price">${item.price || ''}</div>
+                                    </div>
                                 </div>
-                                <div class="item-price">${item.price}</div>
                             </div>
                         `).join('')}
                     </div>
