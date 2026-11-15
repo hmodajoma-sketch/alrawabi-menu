@@ -1,0 +1,27 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "menu_management"
+    label: "إدارة قائمة الطعام (المنيو)"
+    files:
+      - label: "تعديل الأقسام والأسعار"
+        name: "menu_items"
+        file: "menu.json"
+        fields:
+          - label: "أقسام المنيو"
+            name: "categories"
+            widget: "list"
+            fields:
+              - { label: "اسم القسم (مثال: بيتزا)", name: "category", widget: "string" }
+              - label: "الأصناف داخل القسم"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "اسم الصنف / الوجبة", name: "name", widget: "string" }
+                  - { label: "الوصف أو المكونات (اختياري)", name: "desc", widget: "string", required: false }
+                  - { label: "السعر (مثال: 35 د.ل)", name: "price", widget: "string" }
