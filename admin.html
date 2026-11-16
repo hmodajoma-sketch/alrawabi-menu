@@ -57,6 +57,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
+            align-items: center;
         }
         .field {
             flex: 1;
@@ -67,7 +68,7 @@
             color: #aaa;
             margin-bottom: 4px;
         }
-        input {
+        input[type="text"] {
             width: 100%;
             padding: 10px;
             background: #181818;
@@ -109,6 +110,13 @@
             padding: 8px 12px;
             font-size: 12px;
         }
+        .file-upload-wrapper {
+            background: #181818;
+            border: 1px dashed #555;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
         .floating-save {
             position: fixed;
             bottom: 0;
@@ -142,7 +150,7 @@
 <body>
 
 <div class="container">
-    <h1>لوحة إدارة قائمة طعام الروابي (مباشرة)</h1>
+    <h1>لوحة إدارة قائمة طعام الروابي (مباشرة مع رفع الصور)</h1>
 
     <div class="settings-box">
         <label><b>رمز الربط السري (GitHub Token):</b> (يتم حفظه تلقائياً في متصفحك)</label>
@@ -165,7 +173,6 @@
     const branch = "main";
 
     let menuData = { sections: [] };
-    let fileSha = "";
 
     window.onload = function() {
         if(localStorage.getItem('gh_token')) {
@@ -212,9 +219,15 @@
                             </div>
                         </div>
                         <div class="row" style="align-items: flex-end;">
-                            <div class="field">
-                                <label>رابط الصورة</label>
-                                <input type="text" dir="ltr" value="${item.image || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].image = this.value">
+                            <div class="field" style="flex: 2;">
+                                <label>مسار الصورة أو رفع صورة جديدة</label>
+                                <input type="text" dir="ltr" id="img_${sIndex}_${iIndex}" value="${item.image || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].image = this.value" placeholder="/images/photo.jpg">
+                            </div>
+                            <div class="field" style="flex: 2;">
+                                <label>اختر صورة من جهازك:</label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" accept="image/*" onchange="uploadImage(event, ${sIndex}, ${iIndex})">
+                                </div>
                             </div>
                             <button class="btn btn-del" onclick="deleteItem(${sIndex}, ${iIndex})">حذف الوجبة</button>
                         </div>
@@ -262,6 +275,59 @@
         }
     }
 
+    // دالة لرفع الصورة مباشرة إلى مجلد images عبر GitHub API
+    async function uploadImage(event, sIndex, iIndex) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const token = document.getElementById('ghToken').value.trim();
+        if (!token) {
+            alert('الرجاء إدخال رمز GitHub Token في أعلى الصفحة أولاً!');
+            return;
+        }
+
+        const msgElem = document.getElementById('statusMsg');
+        msgElem.style.color = "#ffeb3b";
+        msgElem.innerText = "جاري رفع الصورة للموقع...";
+
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            const base64Content = e.target.result.split(',')[1];
+            const fileName = "img_" + Date.now() + "_" + file.name.replace(/\s+/g, '_');
+            const targetPath = "images/" + fileName;
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${targetPath}`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: "Upload image via Admin Panel",
+                        content: base64Content,
+                        branch: branch
+                    })
+                });
+
+                if (res.ok) {
+                    const imagePathUrl = "/" + targetPath;
+                    menuData.sections[sIndex].items[iIndex].image = imagePathUrl;
+                    document.getElementById(`img_${sIndex}_${iIndex}`).value = imagePathUrl;
+                    msgElem.style.color = "#4caf50";
+                    msgElem.innerText = "تم رفع الصورة بنجاح! اضغط حفظ التغييرات بالأسفل.";
+                    setTimeout(() => { msgElem.innerText = ""; }, 5000);
+                } else {
+                    throw new Error("فشل رفع الصورة");
+                }
+            } catch (err) {
+                msgElem.style.color = "#f44336";
+                msgElem.innerText = "خطأ في رفع الصورة: " + err.message;
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+
     async function saveToGitHub() {
         const token = document.getElementById('ghToken').value.trim();
         const msgElem = document.getElementById('statusMsg');
@@ -272,7 +338,6 @@
         }
 
         localStorage.setItem('gh_token', token);
-
         msgElem.style.color = "#ffeb3b";
         msgElem.innerText = "جاري الحفظ وتحديث الموقع...";
 
@@ -281,7 +346,7 @@
                 headers: { "Authorization": `token ${token}` }
             });
             const fileData = await getRes.json();
-            fileSha = fileData.sha;
+            const fileSha = fileData.sha;
 
             const jsonString = JSON.stringify(menuData, null, 4);
             const contentEncoded = btoa(unescape(encodeURIComponent(jsonString)));
