@@ -5,13 +5,13 @@
             "items": [
                 {
                     "name": "وجبة كباب لحم",
-                    "price": "90 د.ل",
+                    "price": "100 د.ل",
                     "description": "(3 أسياخ - رز - بطاطا)",
                     "image": "/images/victoria-shes-uc0hzduitwy-unsplash.jpg"
                 },
                 {
                     "name": "وجبة شيش لحم",
-                    "price": "45د.ل",
+                    "price": "50 د.ل",
                     "description": "(3 أسياخ - رز - بطاطا)"
                 },
                 {
