@@ -14,7 +14,11 @@
         .badge { background: #ff5722; color: white; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
         .section-title { color: #ff5722; border-bottom: 2px solid #ff5722; padding-bottom: 5px; margin-top: 35px; margin-bottom: 15px; font-size: 22px; }
         .menu-item { background: #1e1e1e; border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 1px solid #333; }
-        .item-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #2b2b2b; flex-shrink: 0; display: none; }
+        
+        /* تعديل جوهري لإظهار مساحة الصورة وتنسيقها بشكل ثابت ومرتب */
+        .item-img { width: 75px; height: 75px; border-radius: 8px; object-fit: cover; background: #2b2b2b; flex-shrink: 0; border: 1px solid #444; display: block; }
+        .item-img-placeholder { width: 75px; height: 75px; border-radius: 8px; background: #222; flex-shrink: 0; border: 1px dashed #444; display: flex; align-items: center; justify-content: center; color: #555; font-size: 10px; }
+
         .item-details { flex: 1; }
         .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .item-name { font-size: 18px; font-weight: bold; color: #fff; }
@@ -46,16 +50,15 @@
             .then(data => {
                 const container = document.getElementById('menuContainer');
                 container.innerHTML = '';
-                if (data.logo) {
+                if (data.logo && data.logo.trim() !== "") {
                     const logoElem = document.getElementById('siteLogo');
                     logoElem.src = data.logo;
                     logoElem.style.display = 'inline-block';
                 }
-                if (data.background) {
+                if (data.background && data.background.trim() !== "") {
                     document.body.style.backgroundImage = `url('${data.background}')`;
                 }
                 
-                // سحب أقسام الصالة فقط
                 const sectionsToDisplay = data.hall_sections || data.sections;
                 if (!sectionsToDisplay || sectionsToDisplay.length === 0) {
                     container.innerHTML = '<p style="text-align:center; color:#aaa;">لا توجد وجبات مضافة لقائمة الصالة حالياً.</p>';
@@ -66,7 +69,14 @@
                     let sectionHtml = `<div class="section-title">${section.section_name || ''}</div>`;
                     if (section.items && section.items.length > 0) {
                         section.items.forEach(item => {
-                            let imgTag = item.image ? `<img src="${item.image}" class="item-img" style="display: block;" alt="${item.name}">` : '';
+                            // إذا كانت الصورة موجودة يتم عرضها، وإلا يتم ترك مساحة مربعة منظمة للصورة
+                            let imgTag = '';
+                            if (item.image && item.image.trim() !== "") {
+                                imgTag = `<img src="${item.image}" class="item-img" alt="${item.name || ''}">`;
+                            } else {
+                                imgTag = `<div class="item-img-placeholder">بدون صورة</div>`;
+                            }
+
                             sectionHtml += `
                                 <div class="menu-item">
                                     ${imgTag}
