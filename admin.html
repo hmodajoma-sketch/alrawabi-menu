@@ -3,268 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم الشاملة - مطعم الروابي</title>
+    <title>لوحة التحكم - مطعم الروابي</title>
     <style>
         body { font-family: Tahoma, Arial, sans-serif; background-color: #121212; color: #f0f0f0; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: #1e1e1e; padding: 20px; border-radius: 12px; border: 1px solid #333; }
-        h1, h2 { color: #ff5722; text-align: center; }
-        .section-box { background: #2b2b2b; border: 1px solid #444; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #121212; border: 1px solid #444; color: white; border-radius: 6px; box-sizing: border-box; }
-        button { cursor: pointer; padding: 10px 15px; border: none; border-radius: 6px; font-weight: bold; }
-        .btn-primary { background: #ff5722; color: white; width: 100%; font-size: 16px; padding: 15px; margin-top: 20px; }
-        .btn-add { background: #2e7d32; color: white; margin: 5px 0; }
-        .btn-danger { background: #c62828; color: white; }
-        .item-row { background: #181818; padding: 10px; border-radius: 6px; margin-top: 10px; border: 1px solid #333; }
-        .tab-switcher { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .tab-menu-btn { background: #333; color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
-        .tab-menu-btn.active { background: #ff5722; }
-        .token-box { background: #311b92; border: 1px solid #512da8; }
-        .img-preview { max-width: 60px; max-height: 60px; vertical-align: middle; margin-top: 5px; border-radius: 4px; border: 1px solid #555; display: block; }
-        .upload-row { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+        .container { max-width: 900px; margin: 0 auto; background: #1e1e1e; padding: 25px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h1, h2, h3 { color: #ff5722; text-align: center; }
+        .token-box { background: #2b2b2b; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #444; }
+        .token-box input { width: 100%; padding: 10px; background: #121212; border: 1px solid #555; color: white; border-radius: 6px; box-sizing: border-box; margin-top: 5px; }
+        .section-box { background: #252525; border: 1px solid #444; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .item-box { background: #2e2e2e; border: 1px solid #555; padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; }
+        input[type="text"], input[type="file"] { padding: 8px; background: #121212; border: 1px solid #444; color: white; border-radius: 5px; font-size: 14px; width: 100%; box-sizing: border-box; }
+        .row { display: flex; gap: 10px; }
+        .row input { flex: 1; }
+        button { background: #ff5722; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.2s; }
+        button:hover { background: #e64a19; }
+        .btn-danger { background: #c62828; }
+        .btn-danger:hover { background: #b71c1c; }
+        .btn-success { background: #2e7d32; width: 100%; font-size: 16px; padding: 15px; margin-top: 20px; }
+        .btn-success:hover { background: #1b5e20; }
+        .preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; border: 1px solid #555; display: inline-block; vertical-align: middle; }
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; color: white; font-size: 20px; flex-direction: column; gap: 15px; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #ff5722; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
+<div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <span id="loadingText">جاري حفظ التغييرات ونشر الصور...</span>
+</div>
+
 <div class="container">
-    <h1>لوحة التحكم الشاملة</h1>
+    <h1>لوحة تحكم مطعم الروابي</h1>
     
-    <!-- إعدادات الربط مع GitHub -->
-    <div class="section-box token-box">
-        <h3>🔐 إعدادات الربط مع GitHub</h3>
-        <label>أدخل رمز الصلاحية (GitHub Token):</label>
-        <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-        <p style="font-size: 12px; color: #d1c4e9; margin: 5px 0 0 0;">مطلوب لحفظ ونشر التعديلات على ملف menu.json مباشرة.</p>
+    <div class="token-box">
+        <label for="githubToken"><strong>رمز صلاحية GitHub (GitHub Personal Access Token):</strong></label>
+        <p style="font-size: 12px; color: #aaa; margin: 5px 0;">يُطلب مرة واحدة فقط لتمكين لوحة التحكم من رفع الصور وحفظ الملفات على مستودعك.</p>
+        <input type="password" id="githubToken" placeholder="أدخل رمز الـ Token هنا (ghp_...)">
     </div>
 
-    <div class="tab-switcher">
-        <button class="tab-menu-btn active" onclick="switchTab('main')">المنيو الرئيسي (التوصيل)</button>
-        <button class="tab-menu-btn" onclick="switchTab('hall')">منيو الصالة</button>
+    <div id="editorContainer">
+        <p style="text-align: center; color: #aaa;">جاري تحميل القائمة...</p>
     </div>
 
-    <!-- الإعدادات العامة (الشعار والخلفية مع زر التحميل من الجهاز) -->
-    <div class="section-box">
-        <h3>الإعدادات العامة (الشعار والخلفية)</h3>
-        
-        <label>شعار المطعم (Logo):</label>
-        <div class="upload-row">
-            <input type="text" id="logoInput" placeholder="رابط الصورة أو اختر ملفاً" onchange="document.getElementById('logoPreview').src=this.value">
-            <input type="file" accept="image/*" onchange="uploadImage(this, 'logoInput', 'logoPreview')">
-        </div>
-        <img id="logoPreview" class="img-preview" src="" onerror="this.style.display='none'" onload="this.style.display='block'">
-
-        <label style="margin-top: 15px; display: block;">صورة الخلفية (Background):</label>
-        <div class="upload-row">
-            <input type="text" id="bgInput" placeholder="رابط الخلفية أو اختر ملفاً">
-            <input type="file" accept="image/*" onchange="uploadImage(this, 'bgInput', null)">
-        </div>
-    </div>
-
-    <!-- محرر المنيو الرئيسي -->
-    <div id="mainMenuEditor" class="menu-editor-section">
-        <h2>أقسام المنيو الرئيسي</h2>
-        <div id="sectionsContainer"></div>
-        <button class="btn-add" onclick="addSection('main')">+ إضافة قسم جديد للرئيسي</button>
-    </div>
-
-    <!-- محرر منيو الصالة -->
-    <div id="hallMenuEditor" class="menu-editor-section" style="display: none;">
-        <h2>أقسام منيو الصالة</h2>
-        <div id="hallSectionsContainer"></div>
-        <button class="btn-add" onclick="addSection('hall')">+ إضافة قسم جديد للصالة</button>
-    </div>
-
-    <button class="btn-primary" onclick="saveData()">حفظ التغييرات ونشرها على الموقع</button>
-    <p id="statusMsg" style="text-align: center; margin-top: 15px;"></p>
+    <button class="btn btn-success" onclick="saveMenu()">💾 حفظ التغييرات ونشرها على الموقع</button>
 </div>
 
 <script>
     const owner = "hmodajoma-sketch";
     const repo = "alrawabi-menu";
-    const path = "menu.json";
     const branch = "main";
-
-    let menuData = { logo: "", background: "", sections: [], hall_sections: [] };
+    let menuData = null;
 
     window.onload = function() {
-        const savedToken = localStorage.getItem('github_token_alrawabi');
-        if(savedToken) {
-            document.getElementById('tokenInput').value = savedToken;
+        const savedToken = localStorage.getItem("github_token_rawabi");
+        if (savedToken) {
+            document.getElementById('githubToken').value = savedToken;
         }
+        loadMenuData();
+    };
 
-        fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime())
+    function loadMenuData() {
+        fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/menu.json?v=` + new Date().getTime())
             .then(res => res.json())
             .then(data => {
                 menuData = data;
-                if(!menuData.hall_sections) menuData.hall_sections = [];
-                document.getElementById('logoInput').value = menuData.logo || "";
-                document.getElementById('logoPreview').src = menuData.logo || "";
-                document.getElementById('bgInput').value = menuData.background || "";
-                renderSections('main');
-                renderSections('hall');
+                renderEditor();
             })
-            .catch(() => alert("تعذر جلب ملف menu.json. تأكد من اتصال الإنترنت."));
-    };
-
-    function switchTab(type) {
-        document.querySelectorAll('.tab-menu-btn').forEach(b => b.classList.remove('active'));
-        if(type === 'main') {
-            document.querySelectorAll('.tab-menu-btn')[0].classList.add('active');
-            document.getElementById('mainMenuEditor').style.display = 'block';
-            document.getElementById('hallMenuEditor').style.display = 'none';
-        } else {
-            document.querySelectorAll('.tab-menu-btn')[1].classList.add('active');
-            document.getElementById('mainMenuEditor').style.display = 'none';
-            document.getElementById('hallMenuEditor').style.display = 'block';
-        }
+            .catch(() => {
+                alert("تعذر تحميل بيانات القائمة من GitHub.");
+            });
     }
 
-    // دالة لتحويل الصورة المرفوعة من الجهاز إلى Base64 وتعبئتها في الحقل تلقائياً
-    function uploadImage(fileInput, targetInputId, previewId) {
-        const file = fileInput.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const base64Data = e.target.result;
-            document.getElementById(targetInputId).value = base64Data;
-            if(targetInputId.includes('item')) {
-                // استخراج الإندكس لتحديث البيانات
-                let parts = targetInputId.split('_');
-                updateItem(parts[1], parts[2], parts[3], 'image', base64Data);
-                renderSections(parts[1]);
-            }
-            if(previewId && document.getElementById(previewId)) {
-                document.getElementById(previewId).src = base64Data;
-            }
-        };
-        reader.readAsDataURL(file);
-    }
-
-    function renderSections(type) {
-        const containerId = type === 'main' ? 'sectionsContainer' : 'hallSectionsContainer';
-        const targetSections = type === 'main' ? menuData.sections : menuData.hall_sections;
-        const container = document.getElementById(containerId);
+    function renderEditor() {
+        const container = document.getElementById('editorContainer');
         container.innerHTML = '';
 
-        targetSections.forEach((sec, sIdx) => {
-            let itemsHtml = '';
-            if(sec.items) {
-                sec.items.forEach((item, iIdx) => {
-                    let fieldId = `img_${type}_${sIdx}_${iIdx}`;
-                    itemsHtml += `
-                        <div class="item-row">
-                            <input type="text" placeholder="اسم الوجبة" value="${item.name || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'name', this.value)">
-                            <input type="text" placeholder="السعر" value="${item.price || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'price', this.value)">
-                            <input type="text" placeholder="الوصف" value="${item.description || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'description', this.value)">
-                            
-                            <label style="font-size:12px; color:#aaa; margin-top:5px; display:block;">صورة الوجبة:</label>
-                            <div class="upload-row">
-                                <input type="text" id="${fieldId}" placeholder="رابط الصورة أو اختر ملفاً من جهازك" value="${item.image || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'image', this.value)">
-                                <input type="file" accept="image/*" onchange="uploadImage(this, '${fieldId}', 'prev_${type}_${sIdx}_${iIdx}')">
-                            </div>
-                            <img id="prev_${type}_${sIdx}_${iIdx}" class="img-preview" src="${item.image || ''}" onerror="this.style.display='none'" onload="this.style.display='block'">
+        if (!menuData.sections) menuData.sections = [];
 
-                            <button class="btn-danger" style="margin-top: 10px;" onclick="deleteItem('${type}', ${sIdx}, ${iIdx})">حذف الوجبة</button>
+        menuData.sections.forEach((section, sIndex) => {
+            let sBox = document.createElement('div');
+            sBox.className = 'section-box';
+            
+            let itemsHtml = '';
+            if (section.items) {
+                section.items.forEach((item, iIndex) => {
+                    itemsHtml += `
+                        <div class="item-box">
+                            <div class="row">
+                                <input type="text" placeholder="اسم الوجبة" value="${item.name || ''}" oninput="updateItem(${sIndex}, ${iIndex}, 'name', this.value)">
+                                <input type="text" placeholder="السعر" value="${item.price || ''}" style="max-width: 120px;" oninput="updateItem(${sIndex}, ${iIndex}, 'price', this.value)">
+                            </div>
+                            <input type="text" placeholder="الوصف (مثال: 3 أسياخ - رز - بطاطا)" value="${item.description || ''}" oninput="updateItem(${sIndex}, ${iIndex}, 'description', this.value)">
+                            <div class="row" style="align-items: center;">
+                                <input type="file" accept="image/*" id="file_${sIndex}_${iIndex}" onchange="prepareImageUpload(${sIndex}, ${iIndex}, this)">
+                                ${item.image ? `<img src="${item.image}" class="preview-img">` : '<span style="font-size:12px; color:#777;">بدون صورة</span>'}
+                                <button class="btn-danger" style="padding: 6px 12px;" onclick="deleteItem(${sIndex}, ${iIndex})">حذف الوجبة</button>
+                            </div>
                         </div>
                     `;
                 });
             }
 
-            container.innerHTML += `
-                <div class="section-box">
-                    <label><b>اسم القسم:</b></label>
-                    <input type="text" value="${sec.section_name || ''}" onchange="updateSectionName('${type}', ${sIdx}, this.value)">
-                    <button class="btn-danger" style="margin-top:5px;" onclick="deleteSection('${type}', ${sIdx})">حذف القسم بالكامل</button>
-                    <h4 style="margin-top: 15px; color: #ffb74d;">الوجبات في هذا القسم:</h4>
-                    ${itemsHtml}
-                    <button class="btn-add" onclick="addItem('${type}', ${sIdx})">+ إضافة وجبة جديدة</button>
-                </div>
+            sBox.innerHTML = `
+                <h3>قسم: <input type="text" value="${section.section_name || ''}" style="width: 60%; display:inline-block;" oninput="updateSectionName(${sIndex}, this.value)"></h3>
+                <div id="items_${sIndex}">${itemsHtml}</div>
+                <button onclick="addItem(${sIndex})">➕ إضافة وجبة جديدة لهذا القسم</button>
+                <button class="btn-danger" style="float: left;" onclick="deleteSection(${sIndex})">حذف القسم بالكامل</button>
+                <div style="clear: both;"></div>
             `;
+            container.appendChild(sBox);
+        });
+
+        let addSecBtn = document.createElement('button');
+        addSecBtn.className = "btn";
+        addSecBtn.style.background = "#1565c0";
+        addSecBtn.style.width = "100%";
+        addSecBtn.style.marginTop = "10px";
+        addSecBtn.innerText = "➕ إضافة قسم جديد";
+        addSecBtn.onclick = addSection;
+        container.appendChild(addSecBtn);
+    }
+
+    function updateSectionName(sIndex, val) { menuData.sections[sIndex].section_name = val; }
+    function updateItem(sIndex, iIndex, field, val) { menuData.sections[sIndex].items[iIndex][field] = val; }
+    
+    function deleteItem(sIndex, iIndex) {
+        menuData.sections[sIndex].items.splice(iIndex, 1);
+        renderEditor();
+    }
+    
+    function addItem(sIndex) {
+        if (!menuData.sections[sIndex].items) menuData.sections[sIndex].items = [];
+        menuData.sections[sIndex].items.push({ name: "", description: "", price: "", image: "" });
+        renderEditor();
+    }
+
+    function deleteSection(sIndex) {
+        if(confirm("هل أنت متأكد من حذف هذا القسم بالكامل؟")) {
+            menuData.sections.splice(sIndex, 1);
+            renderEditor();
+        }
+    }
+
+    function addSection() {
+        menuData.sections.push({ section_name: "قسم جديد", items: [] });
+        renderEditor();
+    }
+
+    // تخزين الملف المؤقت للرفع عند الحفظ
+    let pendingImages = {}; 
+    function prepareImageUpload(sIndex, iIndex, input) {
+        if (input.files && input.files[0]) {
+            pendingImages[`${sIndex}_${iIndex}`] = input.files[0];
+            alert("تم اختيار الصورة بنجاح. سيتم رفعها تلقائياً عند الضغط على زر حفظ التغييرات.");
+        }
+    }
+
+    async function uploadImageToGitHub(file, token) {
+        const reader = new FileReader();
+        return new Promise((resolve, reject) => {
+            reader.onload = async function(e) {
+                const base64Content = e.target.result.split(',')[1];
+                const fileName = `images/img_${Date.now()}_${Math.floor(Math.random() * 1000)}.jpg`;
+                
+                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${fileName}`;
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Upload image ${fileName}`,
+                        content: base64Content,
+                        branch: branch
+                    })
+                });
+
+                if (response.ok) {
+                    const resData = await response.json();
+                    resolve(resData.content.download_url);
+                } else {
+                    reject("فشل رفع إحدى الصور إلى GitHub.");
+                }
+            };
+            reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
         });
     }
 
-    function updateSectionName(type, sIdx, val) {
-        if(type === 'main') menuData.sections[sIdx].section_name = val;
-        else menuData.hall_sections[sIdx].section_name = val;
-    }
-    function updateItem(type, sIdx, iIdx, field, val) {
-        if(type === 'main') menuData.sections[sIdx].items[iIdx][field] = val;
-        else menuData.hall_sections[sIdx].items[iIdx][field] = val;
-    }
-    function addSection(type) {
-        if(type === 'main') menuData.sections.push({ section_name: "قسم جديد", items: [] });
-        else menuData.hall_sections.push({ section_name: "قسم صالة جديد", items: [] });
-        renderSections(type);
-    }
-    function deleteSection(type, sIdx) {
-        if(type === 'main') menuData.sections.splice(sIdx, 1);
-        else menuData.hall_sections.splice(sIdx, 1);
-        renderSections(type);
-    }
-    function addItem(type, sIdx) {
-        const newItem = { name: "", price: "", description: "", image: "" };
-        if(type === 'main') menuData.sections[sIdx].items.push(newItem);
-        else menuData.hall_sections[sIdx].items.push(newItem);
-        renderSections(type);
-    }
-    function deleteItem(type, sIdx, iIdx) {
-        if(type === 'main') menuData.sections[sIdx].items.splice(iIdx, 1);
-        else menuData.hall_sections[sIdx].items.splice(iIdx, 1);
-        renderSections(type);
-    }
-
-    async function saveData() {
-        const githubToken = document.getElementById('tokenInput').value.trim();
-        if (!githubToken) {
-            alert("الرجاء إدخال رمز الصلاحية (GitHub Token) في خانة الربط بأعلى الصفحة!");
+    async function saveMenu() {
+        const token = document.getElementById('githubToken').value.trim();
+        if (!token) {
+            alert("يرجى إدخال رمز صلاحية GitHub (Token) لحفظ التعديلات ورفع الصور.");
             return;
         }
-        
-        localStorage.setItem('github_token_alrawabi', githubToken);
+        localStorage.setItem("github_token_rawabi", token);
 
-        menuData.logo = document.getElementById('logoInput').value;
-        menuData.background = document.getElementById('bgInput').value;
-
-        document.getElementById('statusMsg').style.color = "#ffb74d";
-        document.getElementById('statusMsg').innerText = "جاري الحفظ ونشر التعديلات على الموقع...";
+        const overlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        overlay.style.display = 'flex';
 
         try {
-            let sha = "";
-            let getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-                headers: { "Authorization": `token ${githubToken}` }
-            });
-            if(getRes.ok) {
-                let fileData = await getRes.json();
-                sha = fileData.sha;
+            // 1. رفع الصور المعلقة إلى مجلد images في GitHub أولاً
+            for (let key in pendingImages) {
+                loadingText.innerText = `جاري رفع الصور الجديدة... (${Object.keys(pendingImages).indexOf(key) + 1}/${Object.keys(pendingImages).length})`;
+                const [sIndex, iIndex] = key.split('_');
+                const file = pendingImages[key];
+                const imageUrl = await uploadImageToGitHub(file, token);
+                menuData.sections[sIndex].items[iIndex].image = imageUrl;
             }
+            pendingImages = {}; // تفريغ القائمة المؤقتة بعد الرفع
 
-            let contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(menuData, null, 4))));
-            let putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-                method: "PUT",
+            // 2. تحديث قائمة الصالة hall_sections لتتطابق تلقائياً مع التوصيل
+            menuData.hall_sections = JSON.parse(JSON.stringify(menuData.sections));
+
+            // 3. رفع ملف menu.json المحدث
+            loadingText.innerText = "جاري حفظ ملف القائمة وتحديث الموقع...";
+            const jsonPath = "menu.json";
+            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${jsonPath}`;
+
+            // جلب الـ SHA الحالي للملف لتجنب أخطاء التعارض
+            const getRes = await fetch(apiUrl, { headers: { 'Authorization': `token ${token}` } });
+            const fileData = await getRes.json();
+            const sha = fileData.sha;
+
+            const jsonString = JSON.stringify(menuData, null, 2);
+            const encodedContent = btoa(unescape(encodeURIComponent(jsonString)));
+
+            const putRes = await fetch(apiUrl, {
+                method: 'PUT',
                 headers: {
-                    "Authorization": `token ${githubToken}`,
-                    "Content-Type": "application/json"
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     message: "Update menu and images via admin panel",
-                    content: contentEncoded,
+                    content: encodedContent,
                     sha: sha,
                     branch: branch
                 })
             });
 
-            if(putRes.ok) {
-                document.getElementById('statusMsg').style.color = "#4caf50";
-                document.getElementById('statusMsg').innerText = "تم حفظ وتحديث الموقع بنجاح!";
+            overlay.style.display = 'none';
+
+            if (putRes.ok) {
+                alert("✨ تم حفظ التغييرات ورفع الصور ونشر الموقع بنجاح تام!");
+                loadMenuData();
             } else {
-                document.getElementById('statusMsg').style.color = "#ff5722";
-                document.getElementById('statusMsg').innerText = "فشل الحفظ: تأكد من صحة التوكن (Token).";
+                const errJson = await putRes.json();
+                alert("حدث خطأ أثناء حفظ الملف: " + (errJson.message || "تأكد من صلاحيات الـ Token"));
             }
-        } catch (err) {
-            document.getElementById('statusMsg').style.color = "#ff5722";
-            document.getElementById('statusMsg').innerText = "حدث خطأ أثناء الاتصال بـ GitHub.";
+
+        } catch (error) {
+            overlay.style.display = 'none';
+            alert("خطأ: " + error);
         }
     }
 </script>
-
 </body>
 </html>
