@@ -256,7 +256,6 @@
                 }
 
                 // توليد الباركود لصفحة الصالة مباشرة (hall.html)
-                const hallPageUrl = `https://${owner.toLowerCase()}.github.io/${repo}/hall.html`; // أو نطاقك الرسمي
                 new QRCode(document.getElementById("qrcode"), {
                     text: "https://alrawabiresturant.ly/hall.html",
                     width: 180,
