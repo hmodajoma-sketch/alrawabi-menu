@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منيو الصالة - مطعم الروابي</title>
+    <style>
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .overlay {
+            background-color: rgba(18, 18, 18, 0.92);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .logo {
+            max-width: 110px;
+            max-height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff5722;
+            margin-bottom: 12px;
+            display: none;
+        }
+        h1 {
+            color: #ff5722;
+            margin: 0 0 10px 0;
+            font-size: 26px;
+        }
+        .badge {
+            background: #ff5722;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            color: #ff5722;
+            border-bottom: 2px solid #ff5722;
+            padding-bottom: 5px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .menu-item {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+        }
+        .item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #2b2b2b;
+            flex-shrink: 0;
+            display: none;
+        }
+        .item-details { flex: 1; }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .item-name { font-size: 18px; font-weight: bold; color: #fff; }
+        .item-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4caf50;
+            background: #121212;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #333;
+        }
+        .item-desc { font-size: 14px; color: #aaa; margin: 0; }
+        .loading { text-align: center; color: #aaa; font-size: 18px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <div class="header">
+        <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
+        <h1 id="siteTitle">مطعم الروابي</h1>
+        <div class="badge">🍽️ منيو الصالة (خاص بالداخل)</div>
+    </div>
+
+    <div id="menuContainer" class="loading">جاري تحميل قائمة الصالة...</div>
+</div>
+
+<script>
+    const owner = "hmodajoma-sketch";
+    const repo = "alrawabi-menu";
+    const path = "menu.json";
+    const branch = "main";
+
+    window.onload = function() {
+        fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('menuContainer');
+                container.innerHTML = '';
+
+                if (data.logo) {
+                    const logoElem = document.getElementById('siteLogo');
+                    logoElem.src = data.logo;
+                    logoElem.style.display = 'inline-block';
+                }
+                if (data.background) {
+                    document.body.style.backgroundImage = `url('${data.background}')`;
+                }
+
+                // ستقرأ هذه الصفحة أقسام الصالة (hall_sections) من ملف menu.json
+                const sectionsToDisplay = data.hall_sections || data.sections;
+
+                if (!sectionsToDisplay || sectionsToDisplay.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#aaa;">لا توجد وجبات مضافة لقائمة الصالة حالياً.</p>';
+                    return;
+                }
+
+                sectionsToDisplay.forEach(section => {
+                    let sectionHtml = `<div class="section-title">${section.section_name || ''}</div>`;
+                    
+                    if (section.items && section.items.length > 0) {
+                        section.items.forEach(item => {
+                            let imgTag = item.image ? `<img src="${item.image}" class="item-img" style="display: block;" alt="${item.name}">` : '';
+                            
+                            sectionHtml += `
+                                <div class="menu-item">
+                                    ${imgTag}
+                                    <div class="item-details">
+                                        <div class="item-header">
+                                            <span class="item-name">${item.name || ''}</span>
+                                            <span class="item-price">${item.price || ''}</span>
+                                        </div>
+                                        <p class="item-desc">${item.description || ''}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                    container.innerHTML += sectionHtml;
+                });
+            })
+            .catch(() => {
+                document.getElementById('menuContainer').innerHTML = '<p style="color:#ff5722; text-align:center;">تعذر تحميل القائمة حالياً.</p>';
+            });
+    };
+</script>
+
+</body>
+</html>
