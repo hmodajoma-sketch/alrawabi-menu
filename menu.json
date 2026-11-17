@@ -471,6 +471,10 @@
                     "description": ""
                 }
             ]
+        },
+        {
+            "section_name": "منيو الطلب الخارجي",
+            "items": []
         }
     ],
     "logo": "/images/logo_1794902034732_.jpg",
