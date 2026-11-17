@@ -18,6 +18,7 @@
         .tab-switcher { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
         .tab-menu-btn { background: #333; color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
         .tab-menu-btn.active { background: #ff5722; }
+        .token-box { background: #311b92; border: 1px solid #512da8; }
     </style>
 </head>
 <body>
@@ -25,6 +26,14 @@
 <div class="container">
     <h1>لوحة التحكم الشاملة</h1>
     
+    <!-- خانة التوكن الثابتة والواضحة في أعلى الصفحة -->
+    <div class="section-box token-box">
+        <h3>🔐 إعدادات الربط مع GitHub</h3>
+        <label>أدخل رمز الصلاحية (GitHub Token):</label>
+        <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <p style="font-size: 12px; color: #d1c4e9; margin: 5px 0 0 0;">مطلوب حفظ التوكن هنا لكي تتمكن لوحة التحكم من تعديل وحفظ ملف menu.json بنجاح.</p>
+    </div>
+
     <div class="tab-switcher">
         <button class="tab-menu-btn active" onclick="switchTab('main')">المنيو الرئيسي (التوصيل)</button>
         <button class="tab-menu-btn" onclick="switchTab('hall')">منيو الصالة</button>
@@ -62,11 +71,16 @@
     const repo = "alrawabi-menu";
     const path = "menu.json";
     const branch = "main";
-    let githubToken = prompt("أدخل رمز الصلاحية (GitHub Token) الخاص بك لتفعيل الحفظ:");
 
     let menuData = { logo: "", background: "", sections: [], hall_sections: [] };
 
     window.onload = function() {
+        // استرجاع التوكن المحفوظ مسبقاً في المتصفح إن وجد
+        const savedToken = localStorage.getItem('github_token_alrawabi');
+        if(savedToken) {
+            document.getElementById('tokenInput').value = savedToken;
+        }
+
         fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime())
             .then(res => res.json())
             .then(data => {
@@ -159,47 +173,57 @@
     }
 
     async function saveData() {
+        const githubToken = document.getElementById('tokenInput').value.trim();
         if (!githubToken) {
-            githubToken = prompt("الرجاء إدخال GitHub Token للحفظ:");
-            if (!githubToken) return;
+            alert("الرجاء إدخال رمز الصلاحية (GitHub Token) في الخانة المخصصة بأعلى الصفحة أولاً!");
+            return;
         }
+        
+        // حفظ التوكن في المتصفح لكي لا تبحث عنه في كل مرة
+        localStorage.setItem('github_token_alrawabi', githubToken);
+
         menuData.logo = document.getElementById('logoInput').value;
         menuData.background = document.getElementById('bgInput').value;
 
+        document.getElementById('statusMsg').style.color = "#ffb74d";
         document.getElementById('statusMsg').innerText = "جاري الحفظ ونشر التعديلات...";
 
-        // جلب الـ SHA الحالي للملف
-        let sha = "";
-        let getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-            headers: { "Authorization": `token ${githubToken}` }
-        });
-        if(getRes.ok) {
-            let fileData = await getRes.json();
-            sha = fileData.sha;
-        }
+        try {
+            let sha = "";
+            let getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                headers: { "Authorization": `token ${githubToken}` }
+            });
+            if(getRes.ok) {
+                let fileData = await getRes.json();
+                sha = fileData.sha;
+            }
 
-        // رفع الملف المحدث
-        let contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(menuData, null, 4))));
-        let putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-            method: "PUT",
-            headers: {
-                "Authorization": `token ${githubToken}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: "Update menu via admin panel",
-                content: contentEncoded,
-                sha: sha,
-                branch: branch
-            })
-        });
+            let contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(menuData, null, 4))));
+            let putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${githubToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: "Update menu via admin panel",
+                    content: contentEncoded,
+                    sha: sha,
+                    branch: branch
+                })
+            });
 
-        if(putRes.ok) {
-            document.getElementById('statusMsg').style.color = "#4caf50";
-            document.getElementById('statusMsg').innerText = "تم حفظ وتحديث الموقع بنجاح!";
-        } else {
+            if(putRes.ok) {
+                document.getElementById('statusMsg').style.color = "#4caf50";
+                document.getElementById('statusMsg').innerText = "تم حفظ وتحديث الموقع بنجاح!";
+            } else {
+                let errJson = await putRes.json();
+                document.getElementById('statusMsg').style.color = "#ff5722";
+                document.getElementById('statusMsg').innerText = "فشل الحفظ: تأكد من صحة وصلاحية التوكن (Token).";
+            }
+        } catch (err) {
             document.getElementById('statusMsg').style.color = "#ff5722";
-            document.getElementById('statusMsg').innerText = "فشل الحفظ! تأكد من صلاحية التوكن (Token).";
+            document.getElementById('statusMsg').innerText = "حدث خطأ أثناء الاتصال بـ GitHub.";
         }
     }
 </script>
