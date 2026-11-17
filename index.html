@@ -10,7 +10,10 @@
         .overlay { background-color: rgba(18, 18, 18, 0.92); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
         .container { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 25px; }
-        .logo { max-width: 110px; max-height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #ff5722; margin-bottom: 12px; display: none; }
+        
+        /* تصميم ثابت ومرتب لمكان الشعار لضمان ظهوره بشكل دائم */
+        .logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #ff5722; margin: 0 auto 12px auto; display: none; background: #222; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        
         h1 { color: #ff5722; margin: 0 0 15px 0; font-size: 26px; }
         .contact-buttons { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .btn-contact { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; color: white; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
@@ -28,6 +31,7 @@
         .section-title { color: #ff5722; border-bottom: 2px solid #ff5722; padding-bottom: 5px; margin-top: 35px; margin-bottom: 15px; font-size: 22px; scroll-margin-top: 20px; }
         .menu-item { background: #1e1e1e; border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
         
+        /* تحسين سرعة العرض وثبات مساحات الصور لتجنب البطء */
         .item-img { width: 75px; height: 75px; border-radius: 8px; object-fit: cover; background: #2b2b2b; flex-shrink: 0; border: 1px solid #444; display: block; }
         .item-img-placeholder { width: 75px; height: 75px; border-radius: 8px; background: #222; flex-shrink: 0; border: 1px dashed #444; display: flex; align-items: center; justify-content: center; color: #555; font-size: 10px; }
 
@@ -43,6 +47,7 @@
 <div class="overlay"></div>
 <div class="container">
     <div class="header">
+        <!-- مكان الشعار الثابت والواضح -->
         <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
         <h1 id="siteTitle">مطعم الروابي</h1>
         <div class="contact-buttons">
@@ -80,10 +85,11 @@
                 container.innerHTML = '';
                 navTabsContainer.innerHTML = '';
 
+                // معالجة وإظهار الشعار بمرونة فائقة
                 if (data.logo && data.logo.trim() !== "") {
                     const logoElem = document.getElementById('siteLogo');
                     logoElem.src = data.logo;
-                    logoElem.style.display = 'inline-block';
+                    logoElem.style.display = 'block';
                 }
                 
                 if (data.background && data.background.trim() !== "") {
@@ -110,7 +116,8 @@
                         section.items.forEach(item => {
                             let imgTag = '';
                             if (item.image && item.image.trim() !== "") {
-                                imgTag = `<img src="${item.image}" class="item-img" alt="${item.name || ''}">`;
+                                // استخدام التحميل الكسول (loading="lazy") لتسريع التصفح ومنع التوقف
+                                imgTag = `<img src="${item.image}" class="item-img" alt="${item.name || ''}" loading="lazy">`;
                             } else {
                                 imgTag = `<div class="item-img-placeholder">بدون صورة</div>`;
                             }
