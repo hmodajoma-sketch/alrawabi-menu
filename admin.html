@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة إدارة القائمة المباشرة - مطعم الروابي</title>
+    <title>لوحة إدارة قائمة طعام الروابي</title>
     <style>
         body {
             font-family: Tahoma, Arial, sans-serif;
@@ -150,11 +150,37 @@
 <body>
 
 <div class="container">
-    <h1>لوحة إدارة قائمة طعام الروابي (مباشرة مع رفع الصور)</h1>
+    <h1>لوحة إدارة القائمة والشعار والخلفية - الروابي</h1>
 
     <div class="settings-box">
-        <label><b>رمز الربط السري (GitHub Token):</b> (يتم حفظه تلقائياً في متصفحك)</label>
-        <input type="password" id="ghToken" placeholder="الصق رمز الـ Token هنا (ghp_...)" style="margin-top:5px;">
+        <label><b>رمز الربط السري (GitHub Token):</b></label>
+        <input type="password" id="ghToken" placeholder="الصق رمز الـ Token هنا (ghp_...)" style="margin-top:5px; margin-bottom:15px;">
+        
+        <div class="row">
+            <div class="field">
+                <label><b>رابط أو مسار الشعار (Logo):</b></label>
+                <input type="text" dir="ltr" id="logoInput" placeholder="/images/logo.png">
+            </div>
+            <div class="field">
+                <label><b>رفع شعار جديد من جهازك:</b></label>
+                <div class="file-upload-wrapper">
+                    <input type="file" accept="image/*" onchange="uploadGlobalImage(event, 'logoInput', 'logo')">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="field">
+                <label><b>رابط أو مسار صورة الخلفية (Background):</b></label>
+                <input type="text" dir="ltr" id="bgInput" placeholder="/images/bg.jpg">
+            </div>
+            <div class="field">
+                <label><b>رفع خلفية جديدة من جهازك:</b></label>
+                <div class="file-upload-wrapper">
+                    <input type="file" accept="image/*" onchange="uploadGlobalImage(event, 'bgInput', 'background')">
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="menuEditor">جارٍ تحميل القائمة من المستودع...</div>
@@ -172,7 +198,7 @@
     const path = "menu.json";
     const branch = "main";
 
-    let menuData = { sections: [] };
+    let menuData = { sections: [], logo: "", background: "" };
 
     window.onload = function() {
         if(localStorage.getItem('gh_token')) {
@@ -186,6 +212,12 @@
             .then(res => res.json())
             .then(data => {
                 menuData = data;
+                if(!menuData.sections) menuData.sections = [];
+                
+                // تعبئة حقول الشعار والخلفية إن وُجدت
+                if(menuData.logo) document.getElementById('logoInput').value = menuData.logo;
+                if(menuData.background) document.getElementById('bgInput').value = menuData.background;
+
                 renderEditor();
             })
             .catch(() => {
@@ -220,13 +252,13 @@
                         </div>
                         <div class="row" style="align-items: flex-end;">
                             <div class="field" style="flex: 2;">
-                                <label>مسار الصورة أو رفع صورة جديدة</label>
+                                <label>مسار صورة الوجبة</label>
                                 <input type="text" dir="ltr" id="img_${sIndex}_${iIndex}" value="${item.image || ''}" oninput="menuData.sections[${sIndex}].items[${iIndex}].image = this.value" placeholder="/images/photo.jpg">
                             </div>
                             <div class="field" style="flex: 2;">
-                                <label>اختر صورة من جهازك:</label>
+                                <label>اختر صورة وجبة:</label>
                                 <div class="file-upload-wrapper">
-                                    <input type="file" accept="image/*" onchange="uploadImage(event, ${sIndex}, ${iIndex})">
+                                    <input type="file" accept="image/*" onchange="uploadItemImage(event, ${sIndex}, ${iIndex})">
                                 </div>
                             </div>
                             <button class="btn btn-del" onclick="deleteItem(${sIndex}, ${iIndex})">حذف الوجبة</button>
@@ -275,8 +307,8 @@
         }
     }
 
-    // دالة لرفع الصورة مباشرة إلى مجلد images عبر GitHub API
-    async function uploadImage(event, sIndex, iIndex) {
+    // رفع الشعار أو الخلفية وتحديث الحقل المرتبط
+    async function uploadGlobalImage(event, inputId, targetKey) {
         const file = event.target.files[0];
         if (!file) return;
 
@@ -288,12 +320,12 @@
 
         const msgElem = document.getElementById('statusMsg');
         msgElem.style.color = "#ffeb3b";
-        msgElem.innerText = "جاري رفع الصورة للموقع...";
+        msgElem.innerText = "جاري رفع الصورة...";
 
         const reader = new FileReader();
         reader.onload = async function(e) {
             const base64Content = e.target.result.split(',')[1];
-            const fileName = "img_" + Date.now() + "_" + file.name.replace(/\s+/g, '_');
+            const fileName = targetKey + "_" + Date.now() + "_" + file.name.replace(/\s+/g, '_');
             const targetPath = "images/" + fileName;
 
             try {
@@ -304,7 +336,60 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        message: "Upload image via Admin Panel",
+                        message: "Upload " + targetKey + " via Admin Panel",
+                        content: base64Content,
+                        branch: branch
+                    })
+                });
+
+                if (res.ok) {
+                    const imagePathUrl = "/" + targetPath;
+                    document.getElementById(inputId).value = imagePathUrl;
+                    menuData[targetKey] = imagePathUrl;
+                    msgElem.style.color = "#4caf50";
+                    msgElem.innerText = "تم الرفع بنجاح! اضغط حفظ التغييرات بالأسفل.";
+                    setTimeout(() => { msgElem.innerText = ""; }, 5000);
+                } else {
+                    throw new Error("فشل الرفع");
+                }
+            } catch (err) {
+                msgElem.style.color = "#f44336";
+                msgElem.innerText = "خطأ: " + err.message;
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // رفع صورة الوجبة
+    async function uploadItemImage(event, sIndex, iIndex) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const token = document.getElementById('ghToken').value.trim();
+        if (!token) {
+            alert('الرجاء إدخال رمز GitHub Token في أعلى الصفحة أولاً!');
+            return;
+        }
+
+        const msgElem = document.getElementById('statusMsg');
+        msgElem.style.color = "#ffeb3b";
+        msgElem.innerText = "جاري رفع صورة الوجبة...";
+
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            const base64Content = e.target.result.split(',')[1];
+            const fileName = "item_" + Date.now() + "_" + file.name.replace(/\s+/g, '_');
+            const targetPath = "images/" + fileName;
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${targetPath}`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: "Upload item image via Admin Panel",
                         content: base64Content,
                         branch: branch
                     })
@@ -322,7 +407,7 @@
                 }
             } catch (err) {
                 msgElem.style.color = "#f44336";
-                msgElem.innerText = "خطأ في رفع الصورة: " + err.message;
+                msgElem.innerText = "خطأ: " + err.message;
             }
         };
         reader.readAsDataURL(file);
@@ -336,6 +421,10 @@
             alert('الرجاء إدخال رمز GitHub Token في الأعلى أولاً!');
             return;
         }
+
+        // تحديث قيم الشعار والخلفية من الحقول مباشرة قبل الحفظ
+        menuData.logo = document.getElementById('logoInput').value;
+        menuData.background = document.getElementById('bgInput').value;
 
         localStorage.setItem('gh_token', token);
         msgElem.style.color = "#ffeb3b";
@@ -358,7 +447,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    message: "Update menu.json via Direct Admin Panel",
+                    message: "Update menu.json with Logo and Background",
                     content: contentEncoded,
                     sha: fileSha,
                     branch: branch
