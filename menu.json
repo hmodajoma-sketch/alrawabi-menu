@@ -7,7 +7,7 @@
                     "name": "وجبة كباب لحم",
                     "price": "70 د.ل",
                     "description": "(3 أسياخ - رز - بطاطا)",
-                    "image": "/images/img_1794899004650_4548.jpg"
+                    "image": "/images/item_1794902149990_markus-winkler-WHtVB-RiW2I-unsplash.jpg"
                 },
                 {
                     "name": "وجبة شيش لحم",
@@ -474,5 +474,5 @@
         }
     ],
     "logo": "/images/logo_1794902034732_.jpg",
-    "background": ""
+    "background": "/images/img_1794899004650_4548.jpg"
 }
