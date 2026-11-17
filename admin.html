@@ -19,6 +19,7 @@
         .tab-menu-btn { background: #333; color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
         .tab-menu-btn.active { background: #ff5722; }
         .token-box { background: #311b92; border: 1px solid #512da8; }
+        .img-preview { max-width: 50px; max-height: 50px; vertical-align: middle; margin-right: 10px; border-radius: 4px; border: 1px solid #555; }
     </style>
 </head>
 <body>
@@ -26,12 +27,12 @@
 <div class="container">
     <h1>لوحة التحكم الشاملة</h1>
     
-    <!-- خانة التوكن الثابتة والواضحة في أعلى الصفحة -->
+    <!-- خانة التوكن -->
     <div class="section-box token-box">
         <h3>🔐 إعدادات الربط مع GitHub</h3>
         <label>أدخل رمز الصلاحية (GitHub Token):</label>
         <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-        <p style="font-size: 12px; color: #d1c4e9; margin: 5px 0 0 0;">مطلوب حفظ التوكن هنا لكي تتمكن لوحة التحكم من تعديل وحفظ ملف menu.json بنجاح.</p>
+        <p style="font-size: 12px; color: #d1c4e9; margin: 5px 0 0 0;">مطلوب لحفظ التعديلات ونشرها تلقائياً على الموقع.</p>
     </div>
 
     <div class="tab-switcher">
@@ -39,13 +40,13 @@
         <button class="tab-menu-btn" onclick="switchTab('hall')">منيو الصالة</button>
     </div>
 
-    <!-- قسم إعدادات عامة -->
+    <!-- قسم الإعدادات العامة (الشعار والخلفية) -->
     <div class="section-box">
-        <h3>الإعدادات العامة</h3>
-        <label>رابط الشعار:</label>
-        <input type="text" id="logoInput" placeholder="/images/logo.png">
-        <label>رابط الخلفية:</label>
-        <input type="text" id="bgInput" placeholder="/images/bg.jpg">
+        <h3>الإعدادات العامة (الشعار والخلفية)</h3>
+        <label>رابط الشعار (Logo URL):</label>
+        <input type="text" id="logoInput" placeholder="/images/logo.png أو رابط مباشر">
+        <label>رابط الخلفية (Background URL):</label>
+        <input type="text" id="bgInput" placeholder="/images/bg.jpg أو رابط مباشر">
     </div>
 
     <!-- محرر المنيو الرئيسي -->
@@ -75,7 +76,6 @@
     let menuData = { logo: "", background: "", sections: [], hall_sections: [] };
 
     window.onload = function() {
-        // استرجاع التوكن المحفوظ مسبقاً في المتصفح إن وجد
         const savedToken = localStorage.getItem('github_token_alrawabi');
         if(savedToken) {
             document.getElementById('tokenInput').value = savedToken;
@@ -91,7 +91,7 @@
                 renderSections('main');
                 renderSections('hall');
             })
-            .catch(() => alert("تعذر جلب ملف menu.json"));
+            .catch(() => alert("تعذر جلب ملف menu.json تأكد من الاتصال أو صحة الملف."));
     };
 
     function switchTab(type) {
@@ -120,10 +120,13 @@
                     itemsHtml += `
                         <div class="item-row">
                             <input type="text" placeholder="اسم الوجبة" value="${item.name || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'name', this.value)">
-                            <input type="text" placeholder="السعر" value="${item.price || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'price', this.value)">
-                            <input type="text" placeholder="الوصف" value="${item.description || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'description', this.value)">
-                            <input type="text" placeholder="رابط الصورة" value="${item.image || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'image', this.value)">
-                            <button class="btn-danger" onclick="deleteItem('${type}', ${sIdx}, ${iIdx})">حذف الوجبة</button>
+                            <input type="text" placeholder="السعر (مثال: 20 د.ل)" value="${item.price || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'price', this.value)">
+                            <input type="text" placeholder="الوصف (مكونات الوجبة)" value="${item.description || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'description', this.value)">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
+                                <input type="text" placeholder="رابط صورة الوجبة (اختياري)" value="${item.image || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'image', this.value)" style="margin:0;">
+                                ${item.image ? `<img src="${item.image}" class="img-preview" alt="صورة">` : ''}
+                            </div>
+                            <button class="btn-danger" style="margin-top: 8px;" onclick="deleteItem('${type}', ${sIdx}, ${iIdx})">حذف الوجبة</button>
                         </div>
                     `;
                 });
@@ -133,8 +136,8 @@
                 <div class="section-box">
                     <label><b>اسم القسم:</b></label>
                     <input type="text" value="${sec.section_name || ''}" onchange="updateSectionName('${type}', ${sIdx}, this.value)">
-                    <button class="btn-danger" onclick="deleteSection('${type}', ${sIdx})">حذف القسم بالكامل</button>
-                    <h4>الوجبات في هذا القسم:</h4>
+                    <button class="btn-danger" style="margin-top:5px;" onclick="deleteSection('${type}', ${sIdx})">حذف القسم بالكامل</button>
+                    <h4 style="margin-top: 15px; color: #ffb74d;">الوجبات في هذا القسم:</h4>
                     ${itemsHtml}
                     <button class="btn-add" onclick="addItem('${type}', ${sIdx})">+ إضافة وجبة جديدة</button>
                 </div>
@@ -175,11 +178,10 @@
     async function saveData() {
         const githubToken = document.getElementById('tokenInput').value.trim();
         if (!githubToken) {
-            alert("الرجاء إدخال رمز الصلاحية (GitHub Token) في الخانة المخصصة بأعلى الصفحة أولاً!");
+            alert("الرجاء إدخال رمز الصلاحية (GitHub Token) في خانة الربط بأعلى الصفحة!");
             return;
         }
         
-        // حفظ التوكن في المتصفح لكي لا تبحث عنه في كل مرة
         localStorage.setItem('github_token_alrawabi', githubToken);
 
         menuData.logo = document.getElementById('logoInput').value;
@@ -206,7 +208,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    message: "Update menu via admin panel",
+                    message: "Update menu images and items via admin panel",
                     content: contentEncoded,
                     sha: sha,
                     branch: branch
@@ -217,9 +219,8 @@
                 document.getElementById('statusMsg').style.color = "#4caf50";
                 document.getElementById('statusMsg').innerText = "تم حفظ وتحديث الموقع بنجاح!";
             } else {
-                let errJson = await putRes.json();
                 document.getElementById('statusMsg').style.color = "#ff5722";
-                document.getElementById('statusMsg').innerText = "فشل الحفظ: تأكد من صحة وصلاحية التوكن (Token).";
+                document.getElementById('statusMsg').innerText = "فشل الحفظ: تأكد من صحة التوكن (Token).";
             }
         } catch (err) {
             document.getElementById('statusMsg').style.color = "#ff5722";
