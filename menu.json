@@ -1,7 +1,36 @@
 {
     "sections": [{
     "logo": "/images/logo.png",
+    "background": "/images/bg.jpg",{
+    "logo": "/images/logo.png",
     "background": "/images/bg.jpg",
+    "sections": [
+        {
+            "section_name": "المشاوي والوجبات",
+            "items": [
+                {
+                    "name": "وجبة كباب مشوي",
+                    "price": "20 د.ل",
+                    "description": "لحم طازج مع التتبيلة الخاصة",
+                    "image": ""
+                }
+            ]
+        }
+    ],
+    "hall_sections": [
+        {
+            "section_name": "المشاوي والوجبات (منيو الصالة)",
+            "items": [
+                {
+                    "name": "وجبة كباب مشوي",
+                    "price": "18 د.ل",
+                    "description": "لحم طازج مع التتبيلة الخاصة",
+                    "image": ""
+                }
+            ]
+        }
+    ]
+}
     "sections": [
         {
             "section_name": "الرئيسية (التوصيل والطلب الخارجي)",
