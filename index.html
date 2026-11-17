@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قائمة طعام مطعم الروابي</title>
+    <!-- مكتبة توليد الباركود التلقائي -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         body {
             font-family: Tahoma, Arial, sans-serif;
@@ -46,12 +48,11 @@
             margin: 0 0 15px 0;
             font-size: 26px;
         }
-        /* أزرار الطلب والتواصل السريع */
         .contact-buttons {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
         .btn-contact {
@@ -70,6 +71,49 @@
         .btn-contact:hover { opacity: 0.9; }
         .btn-phone { background-color: #1565c0; }
         .btn-whatsapp { background-color: #2e7d32; }
+        .btn-qr { background-color: #ff5722; border: none; cursor: pointer; }
+
+        /* تصميم النافذة المنبثقة (Modal) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #1e1e1e;
+            border: 1px solid #444;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+        }
+        .modal-content h3 {
+            color: #ff5722;
+            margin-top: 0;
+        }
+        #qrcode {
+            background: white;
+            padding: 15px;
+            display: inline-block;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .close-modal {
+            background: #c62828;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
         /* شريط التنقل السريع بين الأقسام */
         .nav-tabs {
@@ -82,13 +126,8 @@
             scrollbar-width: thin;
             scrollbar-color: #ff5722 #1e1e1e;
         }
-        .nav-tabs::-webkit-scrollbar {
-            height: 6px;
-        }
-        .nav-tabs::-webkit-scrollbar-thumb {
-            background: #ff5722;
-            border-radius: 3px;
-        }
+        .nav-tabs::-webkit-scrollbar { height: 6px; }
+        .nav-tabs::-webkit-scrollbar-thumb { background: #ff5722; border-radius: 3px; }
         .tab-btn {
             background: #1e1e1e;
             color: #ccc;
@@ -136,20 +175,14 @@
             flex-shrink: 0;
             display: none;
         }
-        .item-details {
-            flex: 1;
-        }
+        .item-details { flex: 1; }
         .item-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 5px;
         }
-        .item-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-        }
+        .item-name { font-size: 18px; font-weight: bold; color: #fff; }
         .item-price {
             font-size: 16px;
             font-weight: bold;
@@ -159,17 +192,8 @@
             border-radius: 6px;
             border: 1px solid #333;
         }
-        .item-desc {
-            font-size: 14px;
-            color: #aaa;
-            margin: 0;
-        }
-        .loading {
-            text-align: center;
-            color: #aaa;
-            font-size: 18px;
-            margin-top: 50px;
-        }
+        .item-desc { font-size: 14px; color: #aaa; margin: 0; }
+        .loading { text-align: center; color: #aaa; font-size: 18px; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -181,10 +205,11 @@
         <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
         <h1 id="siteTitle">مطعم الروابي</h1>
 
-        <!-- أزرار التواصل والطلب السريع (قم بتغيير أرقام الهواتف بما يناسبك) -->
+        <!-- أزرار التواصل والطلب والباركود -->
         <div class="contact-buttons">
             <a href="tel:0920000000" class="btn-contact btn-phone">📞 اتصال هاتفي</a>
-            <a href="https://wa.me/218920000000" target="_blank" class="btn-contact btn-whatsapp">💬 طلب عبر الواتساب</a>
+            <a href="https://wa.me/218920000000" target="_blank" class="btn-contact btn-whatsapp">💬 واتساب</a>
+            <button id="qrBtn" class="btn-contact btn-qr" onclick="openQrModal()">📱 باركود المنيو</button>
         </div>
 
         <!-- شريط مفاتيح التنقل السريع بين الأقسام -->
@@ -194,17 +219,27 @@
     <div id="menuContainer" class="loading">جاري تحميل قائمة الطعام...</div>
 </div>
 
+<!-- النافذة المنبثقة للباركود -->
+<div id="qrModal" class="modal-overlay" onclick="closeQrModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h3 id="modalTitle">باركود قائمة الطعام</h3>
+        <p style="font-size: 13px; color: #aaa; margin: 5px 0;">امسح الكود لفتح القائمة مباشرة</p>
+        <div id="qrcode"></div>
+        <br>
+        <button class="close-modal" onclick="closeQrModal()">إغلاق</button>
+    </div>
+</div>
+
 <script>
     const owner = "hmodajoma-sketch";
     const repo = "alrawabi-menu";
     const path = "menu.json";
     const branch = "main";
 
+    let qrTargetUrl = "https://alrawabiresturant.ly"; // القيمة الافتراضية
+
     window.onload = function() {
-        fetch(`https://raw.githubusercontent.for/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime()) // تم تصحيح رابط الجيثب أدناه
-            .catch(() => {
-                return fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime());
-            })
+        fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime())
             .then(res => res.json())
             .then(data => {
                 const container = document.getElementById('menuContainer');
@@ -212,17 +247,34 @@
                 container.innerHTML = '';
                 navTabsContainer.innerHTML = '';
 
-                // تعيين الشعار إن وجد
+                // تعيين الشعار والخلفية إن وجدتا
                 if (data.logo) {
                     const logoElem = document.getElementById('siteLogo');
                     logoElem.src = data.logo;
                     logoElem.style.display = 'inline-block';
                 }
-
-                // تعيين خلفية الموقع إن وجدت
                 if (data.background) {
                     document.body.style.backgroundImage = `url('${data.background}')`;
                 }
+
+                // تخصيص رابط باركود وعنوان الزر من ملف JSON إذا تم ضبطهما من لوحة التحكم
+                if (data.qrUrl) {
+                    qrTargetUrl = data.qrUrl;
+                }
+                if (data.qrBtnText) {
+                    document.getElementById('qrBtn').innerText = "📱 " + data.qrBtnText;
+                    document.getElementById('modalTitle').innerText = data.qrBtnText;
+                }
+
+                // توليد الباركود تلقائياً
+                new QRCode(document.getElementById("qrcode"), {
+                    text: qrTargetUrl,
+                    width: 180,
+                    height: 180,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
 
                 // عرض الأقسام والوجبات ونشاط مفاتيح التنقل
                 if (!data.sections || data.sections.length === 0) {
@@ -232,11 +284,8 @@
 
                 data.sections.forEach((section, index) => {
                     const sectionId = `sec_${index}`;
-                    
-                    // إضافة زر التنقل الخاص بالقسم
                     navTabsContainer.innerHTML += `<a href="#${sectionId}" class="tab-btn">${section.section_name || 'قسم'}</a>`;
 
-                    // بناء محتوى القسم
                     let sectionHtml = `<div id="${sectionId}" class="section-title">${section.section_name || ''}</div>`;
                     
                     if (section.items && section.items.length > 0) {
@@ -264,6 +313,14 @@
                 document.getElementById('menuContainer').innerHTML = '<p style="color:#ff5722; text-align:center;">تعذر تحميل القائمة حالياً. يرجى المحاولة لاحقاً.</p>';
             });
     };
+
+    // دوال فتح وإغلاق النافذة المنبثقة للباركود
+    function openQrModal() {
+        document.getElementById('qrModal').style.display = 'flex';
+    }
+    function closeQrModal(e) {
+        document.getElementById('qrModal').style.display = 'none';
+    }
 </script>
 
 </body>
