@@ -205,11 +205,11 @@
         <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
         <h1 id="siteTitle">مطعم الروابي</h1>
 
-        <!-- أزرار التواصل والطلب والباركود -->
+        <!-- أزرار التواصل والطلب وزر منيو الصالة -->
         <div class="contact-buttons">
             <a href="tel:0920000000" class="btn-contact btn-phone">📞 اتصال هاتفي</a>
             <a href="https://wa.me/218920000000" target="_blank" class="btn-contact btn-whatsapp">💬 واتساب</a>
-            <button id="qrBtn" class="btn-contact btn-qr" onclick="openQrModal()">📱 باركود المنيو</button>
+            <button id="qrBtn" class="btn-contact btn-qr" onclick="openQrModal()">📱 منيو الصالة</button>
         </div>
 
         <!-- شريط مفاتيح التنقل السريع بين الأقسام -->
@@ -222,8 +222,8 @@
 <!-- النافذة المنبثقة للباركود -->
 <div id="qrModal" class="modal-overlay" onclick="closeQrModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <h3 id="modalTitle">باركود قائمة الطعام</h3>
-        <p style="font-size: 13px; color: #aaa; margin: 5px 0;">امسح الكود لفتح القائمة مباشرة</p>
+        <h3 id="modalTitle">منيو الصالة</h3>
+        <p style="font-size: 13px; color: #aaa; margin: 5px 0;">امسح الكود لفتح القائمة الخاصة بالصالة</p>
         <div id="qrcode"></div>
         <br>
         <button class="close-modal" onclick="closeQrModal()">إغلاق</button>
@@ -314,7 +314,6 @@
             });
     };
 
-    // دوال فتح وإغلاق النافذة المنبثقة للباركود
     function openQrModal() {
         document.getElementById('qrModal').style.display = 'flex';
     }
