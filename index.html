@@ -3,440 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم الروابي | Alrawabi Restaurant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>قائمة طعام مطعم الروابي</title>
     <style>
-        :root {
-            --bg-color: #0b0b0b;
-            --surface-color: #161616;
-            --card-bg: #1f1f1f;
-            --accent-gold: #ffb703;
-            --text-main: #ffffff;
-            --text-muted: #9ca3af;
-            --border-subtle: #2d2d2d;
-            --radius-lg: 16px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 100px;
-        }
-
-        /* Hero Header with Dynamic Background */
-        .hero-header {
-            position: relative;
+            font-family: Tahoma, Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            /* سيتم تطبيق خلفية الموقع ديناميكياً أو افتراضياً هنا */
             background-size: cover;
             background-position: center;
-            background-color: #111;
-            border-bottom: 2px solid var(--accent-gold);
-            text-align: center;
-            padding: 45px 20px 30px;
-            overflow: hidden;
+            background-attachment: fixed;
+            min-height: 100vh;
         }
-
-        .hero-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(11, 11, 11, 0.85) 0%, rgba(11, 11, 11, 0.95) 100%);
+        .overlay {
+            background-color: rgba(18, 18, 18, 0.90);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
             z-index: 1;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo-container {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
-            background: var(--surface-color);
-            border: 2px solid var(--accent-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(255, 183, 3, 0.3);
-        }
-
-        .logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .restaurant-name {
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--text-main);
-            margin-bottom: 5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        .restaurant-subtitle {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        /* Contact Action Bar */
-        .action-bar {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .action-chip {
-            background: rgba(22, 22, 22, 0.8);
-            color: var(--accent-gold);
-            border: 1px solid rgba(255, 183, 3, 0.4);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .action-chip:hover {
-            background: var(--accent-gold);
-            color: #000;
-        }
-
-        /* Sticky Category Navigation */
-        .categories-wrapper {
-            background: rgba(22, 22, 22, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-subtle);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 12px 0;
-        }
-
-        .categories-nav {
-            display: flex;
-            overflow-x: auto;
-            gap: 10px;
-            padding: 0 15px;
-            scrollbar-width: none;
-        }
-
-        .categories-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .cat-btn {
-            background: var(--surface-color);
-            color: var(--text-muted);
-            border: 1px solid var(--border-subtle);
-            padding: 8px 20px;
-            border-radius: 25px;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .cat-btn.active, .cat-btn:hover {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-            color: #000;
-            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        .section-block {
-            margin-bottom: 40px;
-        }
-
-        .section-header {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--accent-gold);
-            margin-bottom: 18px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Menu Grid & Cards */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
-        .menu-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .menu-card:hover {
-            border-color: var(--accent-gold);
-            transform: translateY(-3px);
-        }
-
-        .card-img-wrapper {
-            width: 100%;
-            height: 180px;
-            background: #111;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .menu-card:hover .card-img {
-            transform: scale(1.05);
-        }
-
-        .card-body {
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 6px;
-        }
-
-        .card-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            flex-grow: 1;
-        }
-
-        .card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid var(--border-subtle);
-            padding-top: 12px;
-        }
-
-        .card-price {
-            font-size: 17px;
-            font-weight: 900;
-            color: var(--accent-gold);
-        }
-
-        /* Floating Order Footer */
-        .floating-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(11, 11, 11, 0.95);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid var(--border-subtle);
-            padding: 12px 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            z-index: 2000;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
-        }
-
-        .float-action-btn {
-            background: var(--accent-gold);
-            color: #000;
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 14px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
-            transition: transform 0.2s;
-        }
-
-        .float-action-btn.whatsapp {
-            background: #25d366;
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .float-action-btn:active {
-            transform: scale(0.96);
-        }
-
-        .loading-state, .error-state {
+        .header {
             text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            font-size: 15px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff5722;
+            margin-bottom: 15px;
+            display: none; /* يظهر تلقائياً إذا وجد شعار */
+        }
+        h1 {
+            color: #ff5722;
+            margin: 0;
+            font-size: 28px;
+        }
+        .section-title {
+            color: #ff5722;
+            border-bottom: 2px solid #ff5722;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .menu-item {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+        }
+        .item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #2b2b2b;
+            flex-shrink: 0;
+            display: none; /* تظهر فقط إن وجدت صورة للوجبة */
+        }
+        .item-details {
+            flex: 1;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .item-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4caf50;
+            background: #121212;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #333;
+        }
+        .item-desc {
+            font-size: 14px;
+            color: #aaa;
+            margin: 0;
+        }
+        .loading {
+            text-align: center;
+            color: #aaa;
+            font-size: 18px;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
 
-    <header class="hero-header" id="heroHeader">
-        <div class="hero-content">
-            <div class="logo-container">
-                <img src="images/logo.jpg" alt="مطعم الروابي" class="logo-img" onerror="this.style.display='none'">
-            </div>
-            <h1 class="restaurant-name">مطعم الروابي</h1>
-            <p class="restaurant-subtitle">Alrawabi Restaurant - أشهى المشويات، الوجبات، والمعجنات الطازجة</p>
-            
-            <div class="action-bar">
-                <a href="tel:0921699747" class="action-chip">📞 0921699747</a>
-                <a href="tel:0931800053" class="action-chip">📞 0931800053</a>
-                <a href="tel:0941800053" class="action-chip">📞 0941800053</a>
-            </div>
-        </div>
-    </header>
+<div class="overlay"></div>
 
-    <div class="categories-wrapper">
-        <nav class="categories-nav" id="catNav"></nav>
+<div class="container">
+    <div class="header">
+        <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
+        <h1 id="siteTitle">مطعم الروابي</h1>
     </div>
 
-    <main class="container" id="menuContainer">
-        <div class="loading-state">جاري تحميل قائمة الطعام الفاخرة...</div>
-    </main>
+    <div id="menuContainer" class="loading">جاري تحميل قائمة الطعام...</div>
+</div>
 
-    <div class="floating-footer">
-        <a href="tel:0921699747" class="float-action-btn">📞 اتصل للطلب</a>
-        <a href="https://wa.me/218921699747" target="_blank" class="float-action-btn whatsapp">💬 اطلب عبر واتساب</a>
-    </div>
+<script>
+    const owner = "hmodajoma-sketch";
+    const repo = "alrawabi-menu";
+    const path = "menu.json";
+    const branch = "main";
 
-    <script>
-        const catNav = document.getElementById('catNav');
-        const menuContainer = document.getElementById('menuContainer');
-        const heroHeader = document.getElementById('heroHeader');
+    window.onload = function() {
+        fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('menuContainer');
+                container.innerHTML = '';
 
-        async function loadMenu() {
-            try {
-                const response = await fetch('menu.json?t=' + Date.now());
-                const data = await response.json();
-                
-                let sections = [];
-                if (Array.isArray(data)) {
-                    sections = data;
-                } else if (data.sections) {
-                    sections = data.sections;
-                } else if (data.menu_items) {
-                    sections = data.menu_items;
-                } else {
-                    const possibleKey = Object.keys(data).find(key => Array.isArray(data[key]));
-                    if (possibleKey) {
-                        sections = data[possibleKey];
-                    }
+                // تعيين الشعار إن وجد
+                if (data.logo) {
+                    const logoElem = document.getElementById('siteLogo');
+                    logoElem.src = data.logo;
+                    logoElem.style.display = 'inline-block';
                 }
-                
-                if (sections && sections.length > 0) {
-                    for (let sec of sections) {
-                        let items = sec.items || sec.menu_items || [];
-                        if (items.length > 0 && items[0].image) {
-                            heroHeader.style.backgroundImage = `url('${items[0].image}')`;
-                            break;
-                        }
-                    }
-                    renderMenu(sections);
-                } else {
-                    menuContainer.innerHTML = '<div class="error-state">لا توجد أقسام مضافة حالياً في القائمة.</div>';
+
+                // تعيين خلفية الموقع إن وجدت
+                if (data.background) {
+                    document.body.style.backgroundImage = `url('${data.background}')`;
                 }
-            } catch (error) {
-                console.error('Error loading menu data:', error);
-                menuContainer.innerHTML = '<div class="error-state">عفواً، حدث خطأ أثناء تحميل بيانات القائمة.</div>';
-            }
-        }
 
-        function renderMenu(sections) {
-            catNav.innerHTML = '';
-            menuContainer.innerHTML = '';
+                // عرض الأقسام والوجبات
+                if (!data.sections || data.sections.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#aaa;">لا توجد وجبات مضافة حالياً.</p>';
+                    return;
+                }
 
-            sections.forEach((section, index) => {
-                const secName = section.section_name || section.name || `قسم ${index + 1}`;
-                
-                const btn = document.createElement('button');
-                btn.className = `cat-btn ${index === 0 ? 'active' : ''}`;
-                btn.innerText = secName;
-                btn.onclick = () => {
-                    document.getElementById(`sec-${index}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                };
-                catNav.appendChild(btn);
-
-                const items = section.items || section.menu_items || [];
-
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'section-block';
-                sectionDiv.id = `sec-${index}`;
-                sectionDiv.innerHTML = `
-                    <h2 class="section-header">✨ ${secName}</h2>
-                    <div class="menu-grid">
-                        ${items.map(item => `
-                            <div class="menu-card">
-                                ${item.image ? `
-                                    <div class="card-img-wrapper">
-                                        <img src="${item.image}" alt="${item.name || ''}" class="card-img" loading="lazy">
-                                    </div>
-                                ` : ''}
-                                <div class="card-body">
-                                    <div>
-                                        <div class="card-title">${item.name || ''}</div>
-                                        ${item.description ? `<div class="card-desc">${item.description}</div>` : ''}
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="card-price">${item.price || ''}</div>
+                data.sections.forEach(section => {
+                    let sectionHtml = `<div class="section-title">${section.section_name || ''}</div>`;
+                    
+                    if (section.items && section.items.length > 0) {
+                        section.items.forEach(item => {
+                            let imgTag = item.image ? `<img src="${item.image}" class="item-img" style="display: block;" alt="${item.name}">` : '';
+                            
+                            sectionHtml += `
+                                <div class="menu-item">
+                                    ${imgTag}
+                                    <div class="item-details">
+                                        <div class="item-header">
+                                            <span class="item-name">${item.name || ''}</span>
+                                            <span class="item-price">${item.price || ''}</span>
+                                        </div>
+                                        <p class="item-desc">${item.description || ''}</p>
                                     </div>
                                 </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                menuContainer.appendChild(sectionDiv);
+                            `;
+                        });
+                    }
+                    container.innerHTML += sectionHtml;
+                });
+            })
+            .catch(() => {
+                document.getElementById('menuContainer').innerHTML = '<p style="color:#ff5722; text-align:center;">تعذر تحميل القائمة حالياً. يرجى المحاولة لاحقاً.</p>';
             });
-        }
+    };
+</script>
 
-        loadMenu();
-    </script>
 </body>
 </html>
