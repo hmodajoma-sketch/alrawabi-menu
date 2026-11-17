@@ -650,6 +650,29 @@
                     "image": ""
                 }
             ]
+        },
+        {
+            "section_name": "مشروبات",
+            "items": [
+                {
+                    "name": "مشروب غازي",
+                    "price": "4 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "مشروب جرين",
+                    "price": "5 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "مشروب العين",
+                    "price": "3 د.ل",
+                    "description": "",
+                    "image": ""
+                }
+            ]
         }
     ],
     "hall_sections": [
