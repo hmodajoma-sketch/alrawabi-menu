@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - مطعم الروابي</title>
+    <title>لوحة التحكم الشاملة - مطعم الروابي</title>
     <style>
         body { font-family: Tahoma, Arial, sans-serif; background-color: #121212; color: #f0f0f0; margin: 0; padding: 20px; }
         .container { max-width: 900px; margin: 0 auto; background: #1e1e1e; padding: 20px; border-radius: 12px; border: 1px solid #333; }
@@ -19,7 +19,8 @@
         .tab-menu-btn { background: #333; color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
         .tab-menu-btn.active { background: #ff5722; }
         .token-box { background: #311b92; border: 1px solid #512da8; }
-        .img-preview { max-width: 50px; max-height: 50px; vertical-align: middle; margin-right: 10px; border-radius: 4px; border: 1px solid #555; }
+        .img-preview { max-width: 60px; max-height: 60px; vertical-align: middle; margin-top: 5px; border-radius: 4px; border: 1px solid #555; display: block; }
+        .upload-row { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
     </style>
 </head>
 <body>
@@ -27,12 +28,12 @@
 <div class="container">
     <h1>لوحة التحكم الشاملة</h1>
     
-    <!-- خانة التوكن -->
+    <!-- إعدادات الربط مع GitHub -->
     <div class="section-box token-box">
         <h3>🔐 إعدادات الربط مع GitHub</h3>
         <label>أدخل رمز الصلاحية (GitHub Token):</label>
         <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-        <p style="font-size: 12px; color: #d1c4e9; margin: 5px 0 0 0;">مطلوب لحفظ التعديلات ونشرها تلقائياً على الموقع.</p>
+        <p style="font-size: 12px; color: #d1c4e9; margin: 5px 0 0 0;">مطلوب لحفظ ونشر التعديلات على ملف menu.json مباشرة.</p>
     </div>
 
     <div class="tab-switcher">
@@ -40,13 +41,22 @@
         <button class="tab-menu-btn" onclick="switchTab('hall')">منيو الصالة</button>
     </div>
 
-    <!-- قسم الإعدادات العامة (الشعار والخلفية) -->
+    <!-- الإعدادات العامة (الشعار والخلفية مع زر التحميل من الجهاز) -->
     <div class="section-box">
         <h3>الإعدادات العامة (الشعار والخلفية)</h3>
-        <label>رابط الشعار (Logo URL):</label>
-        <input type="text" id="logoInput" placeholder="/images/logo.png أو رابط مباشر">
-        <label>رابط الخلفية (Background URL):</label>
-        <input type="text" id="bgInput" placeholder="/images/bg.jpg أو رابط مباشر">
+        
+        <label>شعار المطعم (Logo):</label>
+        <div class="upload-row">
+            <input type="text" id="logoInput" placeholder="رابط الصورة أو اختر ملفاً" onchange="document.getElementById('logoPreview').src=this.value">
+            <input type="file" accept="image/*" onchange="uploadImage(this, 'logoInput', 'logoPreview')">
+        </div>
+        <img id="logoPreview" class="img-preview" src="" onerror="this.style.display='none'" onload="this.style.display='block'">
+
+        <label style="margin-top: 15px; display: block;">صورة الخلفية (Background):</label>
+        <div class="upload-row">
+            <input type="text" id="bgInput" placeholder="رابط الخلفية أو اختر ملفاً">
+            <input type="file" accept="image/*" onchange="uploadImage(this, 'bgInput', null)">
+        </div>
     </div>
 
     <!-- محرر المنيو الرئيسي -->
@@ -87,11 +97,12 @@
                 menuData = data;
                 if(!menuData.hall_sections) menuData.hall_sections = [];
                 document.getElementById('logoInput').value = menuData.logo || "";
+                document.getElementById('logoPreview').src = menuData.logo || "";
                 document.getElementById('bgInput').value = menuData.background || "";
                 renderSections('main');
                 renderSections('hall');
             })
-            .catch(() => alert("تعذر جلب ملف menu.json تأكد من الاتصال أو صحة الملف."));
+            .catch(() => alert("تعذر جلب ملف menu.json. تأكد من اتصال الإنترنت."));
     };
 
     function switchTab(type) {
@@ -107,6 +118,27 @@
         }
     }
 
+    // دالة لتحويل الصورة المرفوعة من الجهاز إلى Base64 وتعبئتها في الحقل تلقائياً
+    function uploadImage(fileInput, targetInputId, previewId) {
+        const file = fileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64Data = e.target.result;
+            document.getElementById(targetInputId).value = base64Data;
+            if(targetInputId.includes('item')) {
+                // استخراج الإندكس لتحديث البيانات
+                let parts = targetInputId.split('_');
+                updateItem(parts[1], parts[2], parts[3], 'image', base64Data);
+                renderSections(parts[1]);
+            }
+            if(previewId && document.getElementById(previewId)) {
+                document.getElementById(previewId).src = base64Data;
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+
     function renderSections(type) {
         const containerId = type === 'main' ? 'sectionsContainer' : 'hallSectionsContainer';
         const targetSections = type === 'main' ? menuData.sections : menuData.hall_sections;
@@ -117,16 +149,21 @@
             let itemsHtml = '';
             if(sec.items) {
                 sec.items.forEach((item, iIdx) => {
+                    let fieldId = `img_${type}_${sIdx}_${iIdx}`;
                     itemsHtml += `
                         <div class="item-row">
                             <input type="text" placeholder="اسم الوجبة" value="${item.name || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'name', this.value)">
-                            <input type="text" placeholder="السعر (مثال: 20 د.ل)" value="${item.price || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'price', this.value)">
-                            <input type="text" placeholder="الوصف (مكونات الوجبة)" value="${item.description || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'description', this.value)">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
-                                <input type="text" placeholder="رابط صورة الوجبة (اختياري)" value="${item.image || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'image', this.value)" style="margin:0;">
-                                ${item.image ? `<img src="${item.image}" class="img-preview" alt="صورة">` : ''}
+                            <input type="text" placeholder="السعر" value="${item.price || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'price', this.value)">
+                            <input type="text" placeholder="الوصف" value="${item.description || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'description', this.value)">
+                            
+                            <label style="font-size:12px; color:#aaa; margin-top:5px; display:block;">صورة الوجبة:</label>
+                            <div class="upload-row">
+                                <input type="text" id="${fieldId}" placeholder="رابط الصورة أو اختر ملفاً من جهازك" value="${item.image || ''}" onchange="updateItem('${type}', ${sIdx}, ${iIdx}, 'image', this.value)">
+                                <input type="file" accept="image/*" onchange="uploadImage(this, '${fieldId}', 'prev_${type}_${sIdx}_${iIdx}')">
                             </div>
-                            <button class="btn-danger" style="margin-top: 8px;" onclick="deleteItem('${type}', ${sIdx}, ${iIdx})">حذف الوجبة</button>
+                            <img id="prev_${type}_${sIdx}_${iIdx}" class="img-preview" src="${item.image || ''}" onerror="this.style.display='none'" onload="this.style.display='block'">
+
+                            <button class="btn-danger" style="margin-top: 10px;" onclick="deleteItem('${type}', ${sIdx}, ${iIdx})">حذف الوجبة</button>
                         </div>
                     `;
                 });
@@ -188,7 +225,7 @@
         menuData.background = document.getElementById('bgInput').value;
 
         document.getElementById('statusMsg').style.color = "#ffb74d";
-        document.getElementById('statusMsg').innerText = "جاري الحفظ ونشر التعديلات...";
+        document.getElementById('statusMsg').innerText = "جاري الحفظ ونشر التعديلات على الموقع...";
 
         try {
             let sha = "";
@@ -208,7 +245,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    message: "Update menu images and items via admin panel",
+                    message: "Update menu and images via admin panel",
                     content: contentEncoded,
                     sha: sha,
                     branch: branch
