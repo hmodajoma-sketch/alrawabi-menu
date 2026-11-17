@@ -174,19 +174,19 @@
         {
           "name": "نصف كيلو مشكل الروابي بالمكسرات",
           "description": "(8 أسياخ - رز - بطاطا)",
-          "price": "100 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1794948013024_709.jpg"
+          "price": "95 د.ل",
+          "image": ""
         },
         {
           "name": "كيلو مشكل الروابي اكسترا",
           "description": "(16 أسياخ - رز - بطاطا - نص دجاجة)",
-          "price": "190 د.ل",
+          "price": "180 د.ل",
           "image": ""
         },
         {
           "name": "سفرة مشكل الروابي",
           "description": "(18 أسياخ - رز - بطاطا - نص دجاجة)",
-          "price": "250 د.ل",
+          "price": "230 د.ل",
           "image": ""
         }
       ]
@@ -730,19 +730,19 @@
         {
           "name": "نصف كيلو مشكل الروابي بالمكسرات",
           "description": "(8 أسياخ - رز - بطاطا)",
-          "price": "100 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1794948013024_709.jpg"
+          "price": "95 د.ل",
+          "image": ""
         },
         {
           "name": "كيلو مشكل الروابي اكسترا",
           "description": "(16 أسياخ - رز - بطاطا - نص دجاجة)",
-          "price": "190 د.ل",
+          "price": "180 د.ل",
           "image": ""
         },
         {
           "name": "سفرة مشكل الروابي",
           "description": "(18 أسياخ - رز - بطاطا - نص دجاجة)",
-          "price": "250 د.ل",
+          "price": "230 د.ل",
           "image": ""
         }
       ]
