@@ -20,13 +20,13 @@
                 {
                     "name": "وجبة كفتة لحم",
                     "description": "",
-                    "price": "40 د.ل",
+                    "price": "45 د.ل",
                     "image": ""
                 },
                 {
                     "name": "وجبة كباب لحم بالجبنه",
                     "description": "",
-                    "price": "45 د.ل",
+                    "price": "50 د.ل",
                     "image": ""
                 },
                 {
@@ -36,7 +36,7 @@
                     "image": ""
                 },
                 {
-                    "name": "وجبة كوت",
+                    "name": "وجبة حوت",
                     "description": "(رز - بطاطا)",
                     "price": "60 د.ل",
                     "image": ""
