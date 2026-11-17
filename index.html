@@ -58,7 +58,7 @@
         <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
         <h1 id="siteTitle">مطعم الروابي</h1>
         <div class="contact-buttons">
-            <!-- يمكنك تعديل رقم الهاتف ورقم الواتساب من هنا مباشرة -->
+            <!-- أزرار الاتصال والواتساب -->
             <a href="tel:218920000000" class="btn-contact btn-phone">📞 اتصال هاتفي</a>
             <a href="https://wa.me/218920000000" target="_blank" class="btn-contact btn-whatsapp">💬 واتساب</a>
             <button id="qrBtn" class="btn-contact btn-qr" onclick="openQrModal()">📱 منيو الصالة</button>
@@ -93,15 +93,15 @@
                 container.innerHTML = '';
                 navTabsContainer.innerHTML = '';
 
-                // عرض الشعار إذا وجد
-                if (data.logo) {
+                // معالجة عرض الشعار بدقة
+                if (data.logo && data.logo.trim() !== "") {
                     const logoElem = document.getElementById('siteLogo');
                     logoElem.src = data.logo;
                     logoElem.style.display = 'inline-block';
                 }
                 
-                // عرض الخلفية إذا وجدت
-                if (data.background) {
+                // معالجة عرض الخلفية بدقة
+                if (data.background && data.background.trim() !== "") {
                     document.body.style.backgroundImage = `url('${data.background}')`;
                 }
 
@@ -124,8 +124,12 @@
                     
                     if (section.items && section.items.length > 0) {
                         section.items.forEach(item => {
-                            // تفعيل وإظهار صورة الوجبة فور توفرها
-                            let imgTag = item.image ? `<img src="${item.image}" class="item-img" style="display: block;" alt="${item.name}">` : '';
+                            // التحقق من وجود الصورة (سواء رابط أو Base64) وإظهارها حصرياً إن وجدت
+                            let imgTag = '';
+                            if (item.image && item.image.trim() !== "") {
+                                imgTag = `<img src="${item.image}" class="item-img" style="display: block;" alt="${item.name || 'وجبة'}">`;
+                            }
+                            
                             sectionHtml += `
                                 <div class="menu-item">
                                     ${imgTag}
