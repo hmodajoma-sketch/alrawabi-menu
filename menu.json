@@ -209,7 +209,7 @@
         {
           "name": "كباب لحم",
           "description": "",
-          "price": "12 د.ل",
+          "price": "10 د.ل",
           "image": ""
         },
         {
@@ -395,13 +395,13 @@
       "section_name": "معجنات",
       "items": [
         {
-          "name": "طوبة دجاج",
+          "name": "مقلوبة دجاج",
           "description": "",
           "price": "20 د.ل",
           "image": ""
         },
         {
-          "name": "طوبة لحم",
+          "name": "مقلوبة لحم",
           "description": "",
           "price": "25 د.ل",
           "image": ""
