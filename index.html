@@ -6,23 +6,8 @@
     <title>قائمة طعام مطعم الروابي</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body {
-            font-family: Tahoma, Arial, sans-serif;
-            background-color: #121212;
-            color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-        }
-        .overlay {
-            background-color: rgba(18, 18, 18, 0.92);
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: -1;
-        }
+        body { font-family: Tahoma, Arial, sans-serif; background-color: #121212; color: #f0f0f0; margin: 0; padding: 20px; background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; }
+        .overlay { background-color: rgba(18, 18, 18, 0.92); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
         .container { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 25px; }
         .logo { max-width: 110px; max-height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #ff5722; margin-bottom: 12px; display: none; }
@@ -42,7 +27,10 @@
         .tab-btn:hover, .tab-btn.active { background: #ff5722; color: white; border-color: #ff5722; }
         .section-title { color: #ff5722; border-bottom: 2px solid #ff5722; padding-bottom: 5px; margin-top: 35px; margin-bottom: 15px; font-size: 22px; scroll-margin-top: 20px; }
         .menu-item { background: #1e1e1e; border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
-        .item-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #2b2b2b; flex-shrink: 0; display: none; }
+        
+        .item-img { width: 75px; height: 75px; border-radius: 8px; object-fit: cover; background: #2b2b2b; flex-shrink: 0; border: 1px solid #444; display: block; }
+        .item-img-placeholder { width: 75px; height: 75px; border-radius: 8px; background: #222; flex-shrink: 0; border: 1px dashed #444; display: flex; align-items: center; justify-content: center; color: #555; font-size: 10px; }
+
         .item-details { flex: 1; }
         .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .item-name { font-size: 18px; font-weight: bold; color: #fff; }
@@ -58,7 +46,6 @@
         <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
         <h1 id="siteTitle">مطعم الروابي</h1>
         <div class="contact-buttons">
-            <!-- أزرار الاتصال والواتساب -->
             <a href="tel:218920000000" class="btn-contact btn-phone">📞 اتصال هاتفي</a>
             <a href="https://wa.me/218920000000" target="_blank" class="btn-contact btn-whatsapp">💬 واتساب</a>
             <button id="qrBtn" class="btn-contact btn-qr" onclick="openQrModal()">📱 منيو الصالة</button>
@@ -93,19 +80,16 @@
                 container.innerHTML = '';
                 navTabsContainer.innerHTML = '';
 
-                // معالجة عرض الشعار بدقة
                 if (data.logo && data.logo.trim() !== "") {
                     const logoElem = document.getElementById('siteLogo');
                     logoElem.src = data.logo;
                     logoElem.style.display = 'inline-block';
                 }
                 
-                // معالجة عرض الخلفية بدقة
                 if (data.background && data.background.trim() !== "") {
                     document.body.style.backgroundImage = `url('${data.background}')`;
                 }
 
-                // إنشاء الباركود لمنيو الصالة
                 new QRCode(document.getElementById("qrcode"), {
                     text: "https://alrawabiresturant.ly/hall.html",
                     width: 180, height: 180, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H
@@ -124,10 +108,11 @@
                     
                     if (section.items && section.items.length > 0) {
                         section.items.forEach(item => {
-                            // التحقق من وجود الصورة (سواء رابط أو Base64) وإظهارها حصرياً إن وجدت
                             let imgTag = '';
                             if (item.image && item.image.trim() !== "") {
-                                imgTag = `<img src="${item.image}" class="item-img" style="display: block;" alt="${item.name || 'وجبة'}">`;
+                                imgTag = `<img src="${item.image}" class="item-img" alt="${item.name || ''}">`;
+                            } else {
+                                imgTag = `<div class="item-img-placeholder">بدون صورة</div>`;
                             }
                             
                             sectionHtml += `
