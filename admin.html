@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl"><!-- أضف هذا الجزء داخل صندوق الإعدادات .settings-box في ملف admin.html بجانب الشعار والخلفية -->
+    <div style="margin-top: 15px; border-top: 1px solid #444; padding-top: 15px;">
+        <label><b>عنوان رابط الباركود (QR Code URL):</b></label>
+        <input type="text" dir="ltr" id="qrUrlInput" placeholder="https://alrawabiresturant.ly" style="margin-bottom: 10px;">
+        
+        <label><b>نص زر النافذة المنبثقة (مثال: احصل على الباركود الخاص بنا):</b></label>
+        <input type="text" id="qrBtnTextInput" placeholder="عرض الباركود الخاص">
+    </div>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
