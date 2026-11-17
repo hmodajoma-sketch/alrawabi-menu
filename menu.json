@@ -44,25 +44,31 @@
                 {
                     "name": "كيلو كباب لحم",
                     "description": "(14 سيخ - رز - بطاطا)",
-                    "price": "120 د.ل",
+                    "price": "130 د.ل",
                     "image": ""
                 },
                 {
                     "name": "نص كيلو كباب لحم",
                     "description": "(7 أسياخ - رز - بطاطا)",
-                    "price": "65 د.ل",
+                    "price": "70 د.ل",
                     "image": ""
                 },
                 {
                     "name": "وجبة سوشي كباب لحم",
-                    "description": "(7 أسياخ - رز - بطاطا)",
+                    "description": "",
                     "price": "35 د.ل",
                     "image": ""
                 },
                 {
                     "name": "وجبة سوشي كباب لحم بالجبنة",
-                    "description": "(7 أسياخ - رز - بطاطا)",
+                    "description": "",
                     "price": "40 د.ل",
+                    "image": ""
+                },
+                {
+                    "name": "وجبة كباب لحم سيخين",
+                    "price": "27 د.ل",
+                    "description": "(سيخين  - رز - بطاطا)",
                     "image": ""
                 }
             ]
@@ -91,7 +97,7 @@
                 {
                     "name": "وجبة كباب دجاج بالجبنه",
                     "description": "",
-                    "price": "40 د.ل",
+                    "price": "45 د.ل",
                     "image": ""
                 },
                 {
@@ -101,33 +107,57 @@
                     "image": ""
                 },
                 {
+                    "name": "وجبة دجاجة كاملة مشوية",
+                    "description": "(رز - بطاطا)",
+                    "price": "55 د.ل",
+                    "image": ""
+                },
+                {
                     "name": "وجبة كفتة بالدجاج",
                     "description": "(رز - بطاطا)",
-                    "price": "35 د.ل",
+                    "price": "40 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كيلو شيش طاووق",
                     "description": "(10 أسياخ - رز - بطاطا)",
-                    "price": "100 د.ل",
+                    "price": "110 د.ل",
                     "image": ""
                 },
                 {
                     "name": "نص كيلو شيش طاووق",
                     "description": "(5 أسياخ - رز - بطاطا)",
-                    "price": "50 د.ل",
+                    "price": "60 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كيلو كباب دجاج",
                     "description": "(14 سيخ - رز - بطاطا)",
-                    "price": "100 د.ل",
+                    "price": "110 د.ل",
                     "image": ""
                 },
                 {
                     "name": "نصف كيلو كباب دجاج",
-                    "description": "",
-                    "price": "55 د.ل",
+                    "price": "60 د.ل",
+                    "description": "(7 أسياخ - رز - بطاطا)",
+                    "image": ""
+                },
+                {
+                    "name": "وجبة شيش طاووق سيخين",
+                    "price": "27 د.ل",
+                    "description": "(سيخين - رز - بطاطا)",
+                    "image": ""
+                },
+                {
+                    "name": "وجبة كباب دجاج سيخين",
+                    "price": "25 د.ل",
+                    "description": "(سيخين - رز - بطاطا)",
+                    "image": ""
+                },
+                {
+                    "name": "وجبة ربع دجاجة مشوية",
+                    "price": "18 د.ل",
+                    "description": "(رز - بطاطا)",
                     "image": ""
                 }
             ]
@@ -150,13 +180,13 @@
                 {
                     "name": "وجبة مشكل كبير",
                     "description": "(5 أسياخ - رز - بطاطا)",
-                    "price": "55 د.ل",
+                    "price": "60 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كيلو مشكل الروابي",
                     "description": "(14 أسياخ - رز - بطاطا)",
-                    "price": "140 د.ل",
+                    "price": "150 د.ل",
                     "image": ""
                 },
                 {
@@ -168,25 +198,25 @@
                 {
                     "name": "كيلو مشكل الروابي بالمكسرات",
                     "description": "(16 أسياخ - رز - بطاطا)",
-                    "price": "180 د.ل",
+                    "price": "190 د.ل",
                     "image": ""
                 },
                 {
                     "name": "نصف كيلو مشكل الروابي بالمكسرات",
                     "description": "(8 أسياخ - رز - بطاطا)",
-                    "price": "95 د.ل",
+                    "price": "100 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كيلو مشكل الروابي اكسترا",
                     "description": "(16 أسياخ - رز - بطاطا - نص دجاجة)",
-                    "price": "180 د.ل",
+                    "price": "190 د.ل",
                     "image": ""
                 },
                 {
                     "name": "سفرة مشكل الروابي",
                     "description": "(18 أسياخ - رز - بطاطا - نص دجاجة)",
-                    "price": "230 د.ل",
+                    "price": "250 د.ل",
                     "image": ""
                 }
             ]
@@ -197,43 +227,43 @@
                 {
                     "name": "شيش طاووق بالجبنة",
                     "description": "",
-                    "price": "12 د.ل",
+                    "price": "11 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كباب لحم",
                     "description": "",
-                    "price": "12 د.ل",
+                    "price": "10 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كباب دجاج",
                     "description": "",
-                    "price": "10 د.ل",
+                    "price": "9 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كباب لحم دبل سيخ",
                     "description": "",
-                    "price": "18 د.ل",
+                    "price": "16 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كباب دجاج دبل سيخ",
                     "description": "",
-                    "price": "16 د.ل",
+                    "price": "14 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كفتة لحم",
                     "description": "",
-                    "price": "15 د.ل",
+                    "price": "16 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كفتة دجاج",
                     "description": "",
-                    "price": "13 د.ل",
+                    "price": "14 د.ل",
                     "image": ""
                 },
                 {
@@ -245,13 +275,13 @@
                 {
                     "name": "كباب لحم اكسترا",
                     "description": "",
-                    "price": "15 د.ل",
+                    "price": "13 د.ل",
                     "image": ""
                 },
                 {
                     "name": "كباب دجاج اكسترا",
                     "description": "",
-                    "price": "13 د.ل",
+                    "price": "12 د.ل",
                     "image": ""
                 },
                 {
@@ -288,6 +318,12 @@
                     "description": "",
                     "price": "30 د.ل",
                     "image": ""
+                },
+                {
+                    "name": "فخارة شاورما بالجبنة",
+                    "price": "40 د.ل",
+                    "description": "",
+                    "image": ""
                 }
             ]
         },
@@ -297,25 +333,25 @@
                 {
                     "name": "وجبة شاورما شرائح",
                     "description": "",
-                    "price": "40 د.ل",
+                    "price": "35 د.ل",
                     "image": ""
                 },
                 {
                     "name": "صحن شاورما عربي",
                     "description": "",
-                    "price": "45 د.ل",
+                    "price": "40 د.ل",
                     "image": ""
                 },
                 {
                     "name": "صحن شاورما عربي مع شرائح",
                     "description": "",
-                    "price": "50 د.ل",
+                    "price": "45 د.ل",
                     "image": ""
                 },
                 {
                     "name": "بوكس شاورما الروابي",
                     "description": "",
-                    "price": "35 د.ل",
+                    "price": "30 د.ل",
                     "image": ""
                 },
                 {
@@ -327,7 +363,7 @@
                 {
                     "name": "وجبة فتة شاورما",
                     "description": "",
-                    "price": "30 د.ل",
+                    "price": "25 د.ل",
                     "image": ""
                 }
             ]
@@ -366,21 +402,21 @@
                     "image": ""
                 },
                 {
-                    "name": "وجبة استربس",
+                    "name": "وجبة ستربس",
                     "description": "",
-                    "price": "35 د.ل",
+                    "price": "30 د.ل",
                     "image": ""
                 },
                 {
-                    "name": "وجبة فتة استربس",
+                    "name": "وجبة فتة ستربس",
                     "description": "",
-                    "price": "30 د.ل",
+                    "price": "25 د.ل",
                     "image": ""
                 },
                 {
                     "name": "وجبة ناتشوز بطاطا",
                     "description": "",
-                    "price": "30 د.ل",
+                    "price": "25 د.ل",
                     "image": ""
                 }
             ]
@@ -389,27 +425,27 @@
             "section_name": "معجنات",
             "items": [
                 {
-                    "name": "طوبة دجاج",
+                    "name": "مقلوبة دجاج",
                     "description": "",
                     "price": "20 د.ل",
                     "image": ""
                 },
                 {
-                    "name": "طوبة لحم",
+                    "name": "مقلوبة لحم",
                     "description": "",
                     "price": "25 د.ل",
                     "image": ""
                 },
                 {
-                    "name": "تسبايت لحم",
+                    "name": "باقيت لحم",
                     "description": "",
                     "price": "30 د.ل",
                     "image": ""
                 },
                 {
-                    "name": "تسبايت دجاج",
+                    "name": "باقيت دجاج",
                     "description": "",
-                    "price": "25 د.ل",
+                    "price": "23 د.ل",
                     "image": ""
                 },
                 {
@@ -421,25 +457,25 @@
                 {
                     "name": "لفايف كباب لحم",
                     "description": "",
-                    "price": "25 د.ل",
+                    "price": "23 د.ل",
                     "image": ""
                 },
                 {
-                    "name": "كورن كباب",
+                    "name": "كورنو دجاج",
                     "description": "",
-                    "price": "25 د.ل",
+                    "price": "23 د.ل",
                     "image": ""
                 },
                 {
                     "name": "صفيحة لحم",
                     "description": "",
-                    "price": "20 د.ل",
+                    "price": "17 د.ل",
                     "image": ""
                 },
                 {
                     "name": "صفيحة لحم بالجبنة",
                     "description": "",
-                    "price": "25 د.ل",
+                    "price": "20 د.ل",
                     "image": ""
                 },
                 {
@@ -458,6 +494,12 @@
                     "name": "نص كيلو صفيحة لحم",
                     "description": "",
                     "price": "50 د.ل",
+                    "image": ""
+                },
+                {
+                    "name": "ربع كيلو صفيحة لحم",
+                    "price": "25 د.ل",
+                    "description": "",
                     "image": ""
                 }
             ]
@@ -478,13 +520,13 @@
                     "image": ""
                 },
                 {
-                    "name": "بيتزا فطر",
+                    "name": "بيتزا فقاع",
                     "description": "",
                     "price": "22 د.ل",
                     "image": ""
                 },
                 {
-                    "name": "بيتزا تونا",
+                    "name": "بيتزا تن",
                     "description": "",
                     "price": "24 د.ل",
                     "image": ""
@@ -537,6 +579,12 @@
                     "image": ""
                 },
                 {
+                    "name": "كبة مقلية",
+                    "description": "",
+                    "price": "6 د.ل",
+                    "image": ""
+                },
+                {
                     "name": "صحن رز",
                     "description": "",
                     "price": "10 د.ل",
@@ -550,8 +598,55 @@
                 },
                 {
                     "name": "صحن شوربة",
-                    "description": "",
                     "price": "5 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "صحن رز جربي",
+                    "price": "10 د.ل",
+                    "description": "",
+                    "image": ""
+                }
+            ]
+        },
+        {
+            "section_name": "شاورما",
+            "items": [
+                {
+                    "name": "شاورما عادية",
+                    "price": "10 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "شاورما بالجبنة",
+                    "price": "11 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "شاورما دبل فطيرة",
+                    "price": "11 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "شاورما اكسترا",
+                    "price": "15 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "شاورما عربي",
+                    "price": "15 د.ل",
+                    "description": "",
+                    "image": ""
+                },
+                {
+                    "name": "بوكس شاورما اكسترا",
+                    "price": "25 د.ل",
+                    "description": "",
                     "image": ""
                 }
             ]
