@@ -73,7 +73,7 @@
         .btn-whatsapp { background-color: #2e7d32; }
         .btn-qr { background-color: #ff5722; border: none; cursor: pointer; }
 
-        /* تصميم النافذة المنبثقة (Modal) */
+        /* تصميم النافذة المنبثقة للباركود */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -222,8 +222,8 @@
 <!-- النافذة المنبثقة للباركود -->
 <div id="qrModal" class="modal-overlay" onclick="closeQrModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <h3 id="modalTitle">منيو الصالة</h3>
-        <p style="font-size: 13px; color: #aaa; margin: 5px 0;">امسح الكود لفتح القائمة الخاصة بالصالة</p>
+        <h3>منيو الصالة</h3>
+        <p style="font-size: 13px; color: #aaa; margin: 5px 0;">امسح الكود لفتح قائمة الصالة مباشرة</p>
         <div id="qrcode"></div>
         <br>
         <button class="close-modal" onclick="closeQrModal()">إغلاق</button>
@@ -236,8 +236,6 @@
     const path = "menu.json";
     const branch = "main";
 
-    let qrTargetUrl = "https://alrawabiresturant.ly"; // القيمة الافتراضية
-
     window.onload = function() {
         fetch(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}?v=` + new Date().getTime())
             .then(res => res.json())
@@ -247,7 +245,7 @@
                 container.innerHTML = '';
                 navTabsContainer.innerHTML = '';
 
-                // تعيين الشعار والخلفية إن وجدتا
+                // تعيين الشعار والخلفية إن وُجدتا
                 if (data.logo) {
                     const logoElem = document.getElementById('siteLogo');
                     logoElem.src = data.logo;
@@ -257,18 +255,10 @@
                     document.body.style.backgroundImage = `url('${data.background}')`;
                 }
 
-                // تخصيص رابط باركود وعنوان الزر من ملف JSON إذا تم ضبطهما من لوحة التحكم
-                if (data.qrUrl) {
-                    qrTargetUrl = data.qrUrl;
-                }
-                if (data.qrBtnText) {
-                    document.getElementById('qrBtn').innerText = "📱 " + data.qrBtnText;
-                    document.getElementById('modalTitle').innerText = data.qrBtnText;
-                }
-
-                // توليد الباركود تلقائياً
+                // توليد الباركود لصفحة الصالة مباشرة (hall.html)
+                const hallPageUrl = `https://${owner.toLowerCase()}.github.io/${repo}/hall.html`; // أو نطاقك الرسمي
                 new QRCode(document.getElementById("qrcode"), {
-                    text: qrTargetUrl,
+                    text: "https://alrawabiresturant.ly/hall.html",
                     width: 180,
                     height: 180,
                     colorDark : "#000000",
@@ -276,13 +266,15 @@
                     correctLevel : QRCode.CorrectLevel.H
                 });
 
-                // عرض الأقسام والوجبات ونشاط مفاتيح التنقل
-                if (!data.sections || data.sections.length === 0) {
+                // الاعتماد على الأقسام الرئيسية (sections) لعرضها هنا
+                const sections = data.sections;
+
+                if (!sections || sections.length === 0) {
                     container.innerHTML = '<p style="text-align:center; color:#aaa;">لا توجد وجبات مضافة حالياً.</p>';
                     return;
                 }
 
-                data.sections.forEach((section, index) => {
+                sections.forEach((section, index) => {
                     const sectionId = `sec_${index}`;
                     navTabsContainer.innerHTML += `<a href="#${sectionId}" class="tab-btn">${section.section_name || 'قسم'}</a>`;
 
@@ -309,8 +301,9 @@
                     container.innerHTML += sectionHtml;
                 });
             })
-            .catch(() => {
-                document.getElementById('menuContainer').innerHTML = '<p style="color:#ff5722; text-align:center;">تعذر تحميل القائمة حالياً. يرجى المحاولة لاحقاً.</p>';
+            .catch((err) => {
+                console.error(err);
+                document.getElementById('menuContainer').innerHTML = '<p style="color:#ff5722; text-align:center;">تعذر تحميل القائمة حالياً. تأكد من اتصال الإنترنت أو صحة ملف البيانات.</p>';
             });
     };
 
