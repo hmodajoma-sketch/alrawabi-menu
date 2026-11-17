@@ -508,13 +508,13 @@
           "image": ""
         },
         {
-          "name": "بيتزا فطر",
+          "name": "بيتزا فقاع",
           "description": "",
           "price": "22 د.ل",
           "image": ""
         },
         {
-          "name": "بيتزا تونا",
+          "name": "بيتزا تن",
           "description": "",
           "price": "24 د.ل",
           "image": ""
@@ -567,7 +567,19 @@
           "image": ""
         },
         {
+          "name": "كبة مقلية",
+          "description": "",
+          "price": "6 د.ل",
+          "image": ""
+        },
+        {
           "name": "صحن رز",
+          "description": "",
+          "price": "10 د.ل",
+          "image": ""
+        },
+        {
+          "name": "صحن رز جربي",
           "description": "",
           "price": "10 د.ل",
           "image": ""
