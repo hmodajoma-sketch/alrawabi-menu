@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - مطعم الروابي</title>
+    <title>لوحة التحكم الشاملة - مطعم الروابي</title>
     <style>
         body { font-family: Tahoma, Arial, sans-serif; background-color: #121212; color: #f0f0f0; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: #1e1e1e; padding: 25px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .container { max-width: 950px; margin: 0 auto; background: #1e1e1e; padding: 25px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         h1, h2, h3 { color: #ff5722; text-align: center; }
         .token-box, .settings-box { background: #2b2b2b; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #444; }
         .token-box input, .settings-box input[type="file"], .settings-box input[type="text"] { width: 100%; padding: 10px; background: #121212; border: 1px solid #555; color: white; border-radius: 6px; box-sizing: border-box; margin-top: 5px; }
+        
+        .menu-tabs-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #444; padding-bottom: 15px; }
+        .switch-btn { background: #2b2b2b; color: #aaa; border: 1px solid #555; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .switch-btn.active { background: #ff5722; color: white; border-color: #ff5722; }
+
+        .editor-section-wrapper { display: none; }
+        .editor-section-wrapper.active { display: block; }
+
         .section-box { background: #252525; border: 1px solid #444; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
         .item-box { background: #2e2e2e; border: 1px solid #555; padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; }
         input[type="text"], input[type="file"] { padding: 8px; background: #121212; border: 1px solid #444; color: white; border-radius: 5px; font-size: 14px; width: 100%; box-sizing: border-box; }
@@ -19,7 +27,7 @@
         button:hover { background: #e64a19; }
         .btn-danger { background: #c62828; }
         .btn-danger:hover { background: #b71c1c; }
-        .btn-success { background: #2e7d32; width: 100%; font-size: 16px; padding: 15px; margin-top: 20px; }
+        .btn-success { background: #2e7d32; width: 100%; font-size: 18px; padding: 15px; margin-top: 20px; }
         .btn-success:hover { background: #1b5e20; }
         .preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; border: 1px solid #555; }
         .loading-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; color: white; font-size: 20px; flex-direction: column; gap: 15px; }
@@ -35,39 +43,54 @@
 </div>
 
 <div class="container">
-    <h1>لوحة تحكم مطعم الروابي</h1>
+    <h1>لوحة التحكم الشاملة - مطعم الروابي</h1>
     
-    <!-- إعدادات رمز الـ GitHub Token -->
+    <!-- رمز صلاحية GitHub -->
     <div class="token-box">
         <label for="githubToken"><strong>رمز صلاحية GitHub (GitHub Personal Access Token):</strong></label>
-        <p style="font-size: 12px; color: #aaa; margin: 5px 0;">يُطلب مرة واحدة فقط لتمكين لوحة التحكم من رفع الصور وحفظ الملفات على مستودعك.</p>
         <input type="password" id="githubToken" placeholder="أدخل رمز الـ Token هنا (ghp_...)">
     </div>
 
-    <!-- إعدادات الشعار والخلفية -->
+    <!-- إعدادات الشعار والخلفية العامة -->
     <div class="settings-box">
-        <h3>إعدادات الموقع العامة</h3>
+        <h3>إعدادات الموقع العامة (الشعار والخلفية)</h3>
         <div style="margin-bottom: 12px;">
             <label>شعار المطعم (Logo):</label>
             <div class="row" style="margin-top: 5px;">
-                <input type="file" accept="image/*" id="logoFileInput" onchange="prepareGlobalImage('logo', this)">
-                <span id="logoStatus" style="font-size: 12px; color: #aaa;">${menuData && menuData.logo ? 'موجود' : 'بدون شعار'}</span>
+                <input type="file" accept="image/*" onchange="prepareGlobalImage('logo', this)">
+                <span id="logoStatus" style="font-size: 12px; color: #aaa;">تحديث الشعار</span>
             </div>
         </div>
         <div>
             <label>صورة الخلفية (Background):</label>
             <div class="row" style="margin-top: 5px;">
-                <input type="file" accept="image/*" id="bgFileInput" onchange="prepareGlobalImage('background', this)">
-                <span id="bgStatus" style="font-size: 12px; color: #aaa;">${menuData && menuData.background ? 'موجودة' : 'بدون خلفية'}</span>
+                <input type="file" accept="image/*" onchange="prepareGlobalImage('background', this)">
+                <span id="bgStatus" style="font-size: 12px; color: #aaa;">تحديث الخلفية</span>
             </div>
         </div>
     </div>
 
-    <div id="editorContainer">
-        <p style="text-align: center; color: #aaa;">جاري تحميل القائمة...</p>
+    <!-- أزرار التبديل بين تعديل منيو التوصيل أو منيو الصالة -->
+    <div class="menu-tabs-switch">
+        <button id="btnTabDelivery" class="switch-btn active" onclick="switchEditorTab('delivery')">📦 تعديل منيو التوصيل (index)</button>
+        <button id="btnTabHall" class="switch-btn" onclick="switchEditorTab('hall')">🍽️ تعديل منيو الصالة (hall)</button>
     </div>
 
-    <button class="btn btn-success" onclick="saveMenu()">💾 حفظ التغييرات ونشرها على الموقع</button>
+    <!-- محرر منيو التوصيل -->
+    <div id="deliveryEditorWrapper" class="editor-section-wrapper active">
+        <h2>أقسام منيو التوصيل</h2>
+        <div id="deliveryContainer"></div>
+        <button class="btn" style="background:#1565c0; width:100%; margin-top:10px;" onclick="addSection('delivery')">➕ إضافة قسم جديد للتوصيل</button>
+    </div>
+
+    <!-- محرر منيو الصالة -->
+    <div id="hallEditorWrapper" class="editor-section-wrapper">
+        <h2>أقسام منيو الصالة</h2>
+        <div id="hallContainer"></div>
+        <button class="btn" style="background:#1565c0; width:100%; margin-top:10px;" onclick="addSection('hall')">➕ إضافة قسم جديد للصالة</button>
+    </div>
+
+    <button class="btn btn-success" onclick="saveMenu()">💾 حفظ التغييرات ونشرها بالكامل على الموقع</button>
 </div>
 
 <script>
@@ -91,20 +114,40 @@
             .then(res => res.json())
             .then(data => {
                 menuData = data;
-                renderEditor();
+                if (!menuData.sections) menuData.sections = [];
+                if (!menuData.hall_sections) menuData.hall_sections = JSON.parse(JSON.stringify(menuData.sections));
+                renderAllEditors();
             })
             .catch(() => {
                 alert("تعذر تحميل بيانات القائمة من GitHub.");
             });
     }
 
-    function renderEditor() {
-        const container = document.getElementById('editorContainer');
+    function switchEditorTab(tab) {
+        document.getElementById('deliveryEditorWrapper').classList.remove('active');
+        document.getElementById('hallEditorWrapper').classList.remove('active');
+        document.getElementById('btnTabDelivery').classList.remove('active');
+        document.getElementById('btnTabHall').classList.remove('active');
+
+        if (tab === 'delivery') {
+            document.getElementById('deliveryEditorWrapper').classList.add('active');
+            document.getElementById('btnTabDelivery').classList.add('active');
+        } else {
+            document.getElementById('hallEditorWrapper').classList.add('active');
+            document.getElementById('btnTabHall').classList.add('active');
+        }
+    }
+
+    function renderAllEditors() {
+        renderSectionEditor('delivery', menuData.sections, 'deliveryContainer');
+        renderSectionEditor('hall', menuData.hall_sections, 'hallContainer');
+    }
+
+    function renderSectionEditor(type, sectionsArray, containerId) {
+        const container = document.getElementById(containerId);
         container.innerHTML = '';
 
-        if (!menuData.sections) menuData.sections = [];
-
-        menuData.sections.forEach((section, sIndex) => {
+        sectionsArray.forEach((section, sIndex) => {
             let sBox = document.createElement('div');
             sBox.className = 'section-box';
             
@@ -114,14 +157,14 @@
                     itemsHtml += `
                         <div class="item-box">
                             <div class="row">
-                                <input type="text" placeholder="اسم الوجبة" value="${item.name || ''}" oninput="updateItem(${sIndex}, ${iIndex}, 'name', this.value)">
-                                <input type="text" placeholder="السعر" value="${item.price || ''}" style="max-width: 120px;" oninput="updateItem(${sIndex}, ${iIndex}, 'price', this.value)">
+                                <input type="text" placeholder="اسم الوجبة" value="${item.name || ''}" oninput="updateItem('${type}', ${sIndex}, ${iIndex}, 'name', this.value)">
+                                <input type="text" placeholder="السعر" value="${item.price || ''}" style="max-width: 120px;" oninput="updateItem('${type}', ${sIndex}, ${iIndex}, 'price', this.value)">
                             </div>
-                            <input type="text" placeholder="الوصف (مثال: 3 أسياخ - رز - بطاطا)" value="${item.description || ''}" oninput="updateItem(${sIndex}, ${iIndex}, 'description', this.value)">
+                            <input type="text" placeholder="الوصف (مثال: 3 أسياخ - رز - بطاطا)" value="${item.description || ''}" oninput="updateItem('${type}', ${sIndex}, ${iIndex}, 'description', this.value)">
                             <div class="row" style="align-items: center;">
-                                <input type="file" accept="image/*" onchange="prepareItemImageUpload(${sIndex}, ${iIndex}, this)">
+                                <input type="file" accept="image/*" onchange="prepareItemImageUpload('${type}', ${sIndex}, ${iIndex}, this)">
                                 ${item.image ? `<img src="${item.image}" class="preview-img">` : '<span style="font-size:12px; color:#777;">بدون صورة</span>'}
-                                <button class="btn-danger" style="padding: 6px 12px;" onclick="deleteItem(${sIndex}, ${iIndex})">حذف الوجبة</button>
+                                <button class="btn-danger" style="padding: 6px 12px;" onclick="deleteItem('${type}', ${sIndex}, ${iIndex})">حذف الوجبة</button>
                             </div>
                         </div>
                     `;
@@ -129,49 +172,58 @@
             }
 
             sBox.innerHTML = `
-                <h3>قسم: <input type="text" value="${section.section_name || ''}" style="width: 60%; display:inline-block;" oninput="updateSectionName(${sIndex}, this.value)"></h3>
-                <div id="items_${sIndex}">${itemsHtml}</div>
-                <button onclick="addItem(${sIndex})">➕ إضافة وجبة جديدة لهذا القسم</button>
-                <button class="btn-danger" style="float: left;" onclick="deleteSection(${sIndex})">حذف القسم بالكامل</button>
+                <h3>اسم القسم: <input type="text" value="${section.section_name || ''}" style="width: 55%; display:inline-block;" oninput="updateSectionName('${type}', ${sIndex}, this.value)"></h3>
+                <div id="items_${type}_${sIndex}">${itemsHtml}</div>
+                <button onclick="addItem('${type}', ${sIndex})">➕ إضافة وجبة جديدة لهذا القسم</button>
+                <button class="btn-danger" style="float: left;" onclick="deleteSection('${type}', ${sIndex})">حذف القسم بالكامل</button>
                 <div style="clear: both;"></div>
             `;
             container.appendChild(sBox);
         });
-
-        let addSecBtn = document.createElement('button');
-        addSecBtn.className = "btn";
-        addSecBtn.style.background = "#1565c0";
-        addSecBtn.style.width = "100%";
-        addSecBtn.style.marginTop = "10px";
-        addSecBtn.innerText = "➕ إضافة قسم جديد";
-        addSecBtn.onclick = addSection;
-        container.appendChild(addSecBtn);
     }
 
-    function updateSectionName(sIndex, val) { menuData.sections[sIndex].section_name = val; }
-    function updateItem(sIndex, iIndex, field, val) { menuData.sections[sIndex].items[iIndex][field] = val; }
-    
-    function deleteItem(sIndex, iIndex) {
-        menuData.sections[sIndex].items.splice(iIndex, 1);
-        renderEditor();
-    }
-    
-    function addItem(sIndex) {
-        if (!menuData.sections[sIndex].items) menuData.sections[sIndex].items = [];
-        menuData.sections[sIndex].items.push({ name: "", description: "", price: "", image: "" });
-        renderEditor();
+    function updateSectionName(type, sIndex, val) {
+        if (type === 'delivery') menuData.sections[sIndex].section_name = val;
+        else menuData.hall_sections[sIndex].section_name = val;
     }
 
-    function deleteSection(sIndex) {
+    function updateItem(type, sIndex, iIndex, field, val) {
+        if (type === 'delivery') menuData.sections[sIndex].items[iIndex][field] = val;
+        else menuData.hall_sections[sIndex].items[iIndex][field] = val;
+    }
+
+    function deleteItem(type, sIndex, iIndex) {
+        if (type === 'delivery') menuData.sections[sIndex].items.splice(iIndex, 1);
+        else menuData.hall_sections[sIndex].items.splice(iIndex, 1);
+        renderAllEditors();
+    }
+
+    function addItem(type, sIndex) {
+        if (type === 'delivery') {
+            if (!menuData.sections[sIndex].items) menuData.sections[sIndex].items = [];
+            menuData.sections[sIndex].items.push({ name: "", description: "", price: "", image: "" });
+        } else {
+            if (!menuData.hall_sections[sIndex].items) menuData.hall_sections[sIndex].items = [];
+            menuData.hall_sections[sIndex].items.push({ name: "", description: "", price: "", image: "" });
+        }
+        renderAllEditors();
+    }
+
+    function deleteSection(type, sIndex) {
         if(confirm("هل أنت متأكد من حذف هذا القسم بالكامل؟")) {
-            menuData.sections.splice(sIndex, 1);
-            renderEditor();
+            if (type === 'delivery') menuData.sections.splice(sIndex, 1);
+            else menuData.hall_sections.splice(sIndex, 1);
+            renderAllEditors();
         }
     }
 
-    function addSection() {
-        menuData.sections.push({ section_name: "قسم جديد", items: [] });
-        renderEditor();
+    function addSection(type) {
+        if (type === 'delivery') {
+            menuData.sections.push({ section_name: "قسم توصيل جديد", items: [] });
+        } else {
+            menuData.hall_sections.push({ section_name: "قسم صالة جديد", items: [] });
+        }
+        renderAllEditors();
     }
 
     function prepareGlobalImage(type, input) {
@@ -181,9 +233,9 @@
         }
     }
 
-    function prepareItemImageUpload(sIndex, iIndex, input) {
+    function prepareItemImageUpload(type, sIndex, iIndex, input) {
         if (input.files && input.files[0]) {
-            pendingItemImages[`${sIndex}_${iIndex}`] = input.files[0];
+            pendingItemImages[`${type}_${sIndex}_${iIndex}`] = input.files[0];
             alert("تم اختيار صورة الوجبة بنجاح.");
         }
     }
@@ -234,7 +286,7 @@
         overlay.style.display = 'flex';
 
         try {
-            // 1. رفع الشعار والخلفية إذا تم تغييرهما
+            // 1. رفع الشعار والخلفية العامة
             for (let type in pendingGlobalImages) {
                 loadingText.innerText = `جاري رفع صورة ${type === 'logo' ? 'الشعار' : 'الخلفية'}...`;
                 const file = pendingGlobalImages[type];
@@ -243,22 +295,27 @@
             }
             pendingGlobalImages = {};
 
-            // 2. رفع صور الوجبات المعلقة
+            // 2. رفع صور الوجبات المعلقة (سواء للتوصيل أو الصالة بكل دقة)
             let keys = Object.keys(pendingItemImages);
             for (let i = 0; i < keys.length; i++) {
                 let key = keys[i];
                 loadingText.innerText = `جاري رفع صور الوجبات... (${i + 1}/${keys.length})`;
-                const [sIndex, iIndex] = key.split('_');
+                const parts = key.split('_');
+                const type = parts[0];
+                const sIndex = parts[1];
+                const iIndex = parts[2];
                 const file = pendingItemImages[key];
                 const imageUrl = await uploadImageToGitHub(file, token);
-                menuData.sections[sIndex].items[iIndex].image = imageUrl;
+                
+                if (type === 'delivery') {
+                    menuData.sections[sIndex].items[iIndex].image = imageUrl;
+                } else {
+                    menuData.hall_sections[sIndex].items[iIndex].image = imageUrl;
+                }
             }
             pendingItemImages = {};
 
-            // 3. مزامنة قسم الصالة تلقائياً
-            menuData.hall_sections = JSON.parse(JSON.stringify(menuData.sections));
-
-            // 4. حفظ ملف menu.json
+            // 3. حفظ ملف menu.json المحدث على GitHub
             loadingText.innerText = "جاري حفظ ملف القائمة وتحديث الموقع...";
             const jsonPath = "menu.json";
             const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${jsonPath}`;
@@ -277,7 +334,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    message: "Update menu, logo, background and images via admin panel",
+                    message: "Update delivery and hall menus via admin panel",
                     content: encodedContent,
                     sha: sha,
                     branch: branch
@@ -287,7 +344,7 @@
             overlay.style.display = 'none';
 
             if (putRes.ok) {
-                alert("✨ تم حفظ التغييرات ورفع الصور ونشر الموقع بنجاح تام!");
+                alert("✨ تم حفظ التعديلات الخاصة بالتوصيل والصالة ونشر الموقع بنجاح تام!");
                 loadMenuData();
             } else {
                 const errJson = await putRes.json();
