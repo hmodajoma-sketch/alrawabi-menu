@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قائمة طعام مطعم الروابي</title>
-    <!-- مكتبة توليد الباركود التلقائي -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         body {
@@ -24,202 +23,50 @@
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: -1;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .logo {
-            max-width: 110px;
-            max-height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #ff5722;
-            margin-bottom: 12px;
-            display: none;
-        }
-        h1 {
-            color: #ff5722;
-            margin: 0 0 15px 0;
-            font-size: 26px;
-        }
-        .contact-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        .btn-contact {
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            color: white;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transition: opacity 0.2s;
-        }
-        .btn-contact:hover { opacity: 0.9; }
+        .container { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .logo { max-width: 110px; max-height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #ff5722; margin-bottom: 12px; display: none; }
+        h1 { color: #ff5722; margin: 0 0 15px 0; font-size: 26px; }
+        .contact-buttons { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .btn-contact { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; color: white; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
         .btn-phone { background-color: #1565c0; }
         .btn-whatsapp { background-color: #2e7d32; }
         .btn-qr { background-color: #ff5722; border: none; cursor: pointer; }
-
-        /* تصميم النافذة المنبثقة للباركود */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #1e1e1e;
-            border: 1px solid #444;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 320px;
-            width: 90%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-        }
-        .modal-content h3 {
-            color: #ff5722;
-            margin-top: 0;
-        }
-        #qrcode {
-            background: white;
-            padding: 15px;
-            display: inline-block;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        .close-modal {
-            background: #c62828;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        /* شريط التنقل السريع بين الأقسام */
-        .nav-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-            white-space: nowrap;
-            scrollbar-width: thin;
-            scrollbar-color: #ff5722 #1e1e1e;
-        }
-        .nav-tabs::-webkit-scrollbar { height: 6px; }
-        .nav-tabs::-webkit-scrollbar-thumb { background: #ff5722; border-radius: 3px; }
-        .tab-btn {
-            background: #1e1e1e;
-            color: #ccc;
-            border: 1px solid #333;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-        .tab-btn:hover, .tab-btn.active {
-            background: #ff5722;
-            color: white;
-            border-color: #ff5722;
-        }
-
-        .section-title {
-            color: #ff5722;
-            border-bottom: 2px solid #ff5722;
-            padding-bottom: 5px;
-            margin-top: 35px;
-            margin-bottom: 15px;
-            font-size: 22px;
-            scroll-margin-top: 20px;
-        }
-        .menu-item {
-            background: #1e1e1e;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            border: 1px solid #333;
-        }
-        .item-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: #2b2b2b;
-            flex-shrink: 0;
-            display: none;
-        }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #1e1e1e; border: 1px solid #444; padding: 25px; border-radius: 12px; text-align: center; max-width: 320px; width: 90%; }
+        .modal-content h3 { color: #ff5722; margin-top: 0; }
+        #qrcode { background: white; padding: 15px; display: inline-block; border-radius: 8px; margin: 15px 0; }
+        .close-modal { background: #c62828; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .nav-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 25px; white-space: nowrap; }
+        .tab-btn { background: #1e1e1e; color: #ccc; border: 1px solid #333; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: bold; text-decoration: none; }
+        .tab-btn:hover, .tab-btn.active { background: #ff5722; color: white; border-color: #ff5722; }
+        .section-title { color: #ff5722; border-bottom: 2px solid #ff5722; padding-bottom: 5px; margin-top: 35px; margin-bottom: 15px; font-size: 22px; scroll-margin-top: 20px; }
+        .menu-item { background: #1e1e1e; border-radius: 10px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
+        .item-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #2b2b2b; flex-shrink: 0; display: none; }
         .item-details { flex: 1; }
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
+        .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .item-name { font-size: 18px; font-weight: bold; color: #fff; }
-        .item-price {
-            font-size: 16px;
-            font-weight: bold;
-            color: #4caf50;
-            background: #121212;
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid #333;
-        }
+        .item-price { font-size: 16px; font-weight: bold; color: #4caf50; background: #121212; padding: 4px 10px; border-radius: 6px; border: 1px solid #333; }
         .item-desc { font-size: 14px; color: #aaa; margin: 0; }
         .loading { text-align: center; color: #aaa; font-size: 18px; margin-top: 50px; }
     </style>
 </head>
 <body>
-
 <div class="overlay"></div>
-
 <div class="container">
     <div class="header">
         <img id="siteLogo" class="logo" src="" alt="شعار المطعم">
         <h1 id="siteTitle">مطعم الروابي</h1>
-
-        <!-- أزرار التواصل والطلب وزر منيو الصالة -->
         <div class="contact-buttons">
             <a href="tel:0920000000" class="btn-contact btn-phone">📞 اتصال هاتفي</a>
             <a href="https://wa.me/218920000000" target="_blank" class="btn-contact btn-whatsapp">💬 واتساب</a>
             <button id="qrBtn" class="btn-contact btn-qr" onclick="openQrModal()">📱 منيو الصالة</button>
         </div>
-
-        <!-- شريط مفاتيح التنقل السريع بين الأقسام -->
         <div id="navTabs" class="nav-tabs"></div>
     </div>
-
     <div id="menuContainer" class="loading">جاري تحميل قائمة الطعام...</div>
 </div>
 
-<!-- النافذة المنبثقة للباركود -->
 <div id="qrModal" class="modal-overlay" onclick="closeQrModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <h3>منيو الصالة</h3>
@@ -245,7 +92,6 @@
                 container.innerHTML = '';
                 navTabsContainer.innerHTML = '';
 
-                // تعيين الشعار والخلفية إن وُجدتا
                 if (data.logo) {
                     const logoElem = document.getElementById('siteLogo');
                     logoElem.src = data.logo;
@@ -255,19 +101,12 @@
                     document.body.style.backgroundImage = `url('${data.background}')`;
                 }
 
-                // توليد الباركود لصفحة الصالة مباشرة (hall.html)
                 new QRCode(document.getElementById("qrcode"), {
                     text: "https://alrawabiresturant.ly/hall.html",
-                    width: 180,
-                    height: 180,
-                    colorDark : "#000000",
-                    colorLight : "#ffffff",
-                    correctLevel : QRCode.CorrectLevel.H
+                    width: 180, height: 180, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H
                 });
 
-                // الاعتماد على الأقسام الرئيسية (sections) لعرضها هنا
                 const sections = data.sections;
-
                 if (!sections || sections.length === 0) {
                     container.innerHTML = '<p style="text-align:center; color:#aaa;">لا توجد وجبات مضافة حالياً.</p>';
                     return;
@@ -276,13 +115,11 @@
                 sections.forEach((section, index) => {
                     const sectionId = `sec_${index}`;
                     navTabsContainer.innerHTML += `<a href="#${sectionId}" class="tab-btn">${section.section_name || 'قسم'}</a>`;
-
                     let sectionHtml = `<div id="${sectionId}" class="section-title">${section.section_name || ''}</div>`;
                     
                     if (section.items && section.items.length > 0) {
                         section.items.forEach(item => {
                             let imgTag = item.image ? `<img src="${item.image}" class="item-img" style="display: block;" alt="${item.name}">` : '';
-                            
                             sectionHtml += `
                                 <div class="menu-item">
                                     ${imgTag}
@@ -300,19 +137,13 @@
                     container.innerHTML += sectionHtml;
                 });
             })
-            .catch((err) => {
-                console.error(err);
-                document.getElementById('menuContainer').innerHTML = '<p style="color:#ff5722; text-align:center;">تعذر تحميل القائمة حالياً. تأكد من اتصال الإنترنت أو صحة ملف البيانات.</p>';
+            .catch(() => {
+                document.getElementById('menuContainer').innerHTML = '<p style="color:#ff5722; text-align:center;">تعذر تحميل القائمة حالياً.</p>';
             });
     };
 
-    function openQrModal() {
-        document.getElementById('qrModal').style.display = 'flex';
-    }
-    function closeQrModal(e) {
-        document.getElementById('qrModal').style.display = 'none';
-    }
+    function openQrModal() { document.getElementById('qrModal').style.display = 'flex'; }
+    function closeQrModal() { document.getElementById('qrModal').style.display = 'none'; }
 </script>
-
 </body>
 </html>
