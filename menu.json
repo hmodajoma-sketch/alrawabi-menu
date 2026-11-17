@@ -474,7 +474,14 @@
         },
         {
             "section_name": "منيو الطلب الخارجي",
-            "items": []
+            "items": [
+                {
+                    "name": "كسكسي",
+                    "price": "40د.ل",
+                    "description": "",
+                    "image": ""
+                }
+            ]
         }
     ],
     "logo": "/images/logo_1794902034732_.jpg",
