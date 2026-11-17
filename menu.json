@@ -1,5 +1,34 @@
 {
+    "sections": [{
+    "logo": "/images/logo.png",
+    "background": "/images/bg.jpg",
     "sections": [
+        {
+            "section_name": "الرئيسية (التوصيل والطلب الخارجي)",
+            "items": [
+                {
+                    "name": "مثال وجبة",
+                    "price": "20 د.ل",
+                    "description": "وصف الوجبة هنا",
+                    "image": "/images/photo.jpg"
+                }
+            ]
+        }
+    ],
+    "hall_sections": [
+        {
+            "section_name": "منيو الصالة (أسعار الصالة)",
+            "items": [
+                {
+                    "name": "مثال وجبة",
+                    "price": "18 د.ل",
+                    "description": "وصف الوجبة هنا",
+                    "image": "/images/photo.jpg"
+                }
+            ]
+        }
+    ]
+}
         {
             "section_name": "وجبات الروابي لحم",
             "items": [
