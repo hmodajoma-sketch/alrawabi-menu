@@ -326,26 +326,26 @@
       "items": [
         {
           "name": "وجبة شاورما شرائح",
-          "description": "",
-          "price": "40 د.ل",
+          "description": "(رز - بطاطا)",
+          "price": "35 د.ل",
           "image": ""
         },
         {
           "name": "صحن شاورما عربي",
           "description": "",
-          "price": "45 د.ل",
+          "price": "40 د.ل",
           "image": ""
         },
         {
           "name": "صحن شاورما عربي مع شرائح",
           "description": "",
-          "price": "50 د.ل",
+          "price": "45 د.ل",
           "image": ""
         },
         {
           "name": "بوكس شاورما الروابي",
           "description": "",
-          "price": "35 د.ل",
+          "price": "30 د.ل",
           "image": ""
         },
         {
@@ -357,7 +357,7 @@
         {
           "name": "وجبة فتة شاورما",
           "description": "",
-          "price": "30 د.ل",
+          "price": "25 د.ل",
           "image": ""
         }
       ]
@@ -398,19 +398,19 @@
         {
           "name": "وجبة استربس",
           "description": "",
-          "price": "35 د.ل",
+          "price": "30 د.ل",
           "image": ""
         },
         {
           "name": "وجبة فتة استربس",
           "description": "",
-          "price": "30 د.ل",
+          "price": "25 د.ل",
           "image": ""
         },
         {
           "name": "وجبة ناتشوز بطاطا",
           "description": "",
-          "price": "30 د.ل",
+          "price": "25 د.ل",
           "image": ""
         }
       ]
@@ -425,21 +425,21 @@
           "image": ""
         },
         {
-          "name": "طوبة لحم",
+          "name": "مقلوبة لحم",
           "description": "",
           "price": "25 د.ل",
           "image": ""
         },
         {
-          "name": "تسبايت لحم",
+          "name": "باقيت لحم",
           "description": "",
           "price": "30 د.ل",
           "image": ""
         },
         {
-          "name": "تسبايت دجاج",
+          "name": "باقيت دجاج",
           "description": "",
-          "price": "25 د.ل",
+          "price": "23 د.ل",
           "image": ""
         },
         {
@@ -451,25 +451,25 @@
         {
           "name": "لفايف كباب لحم",
           "description": "",
-          "price": "25 د.ل",
+          "price": "23 د.ل",
           "image": ""
         },
         {
-          "name": "كورن كباب",
+          "name": "كورنو ",
           "description": "",
-          "price": "25 د.ل",
+          "price": "23 د.ل",
           "image": ""
         },
         {
           "name": "صفيحة لحم",
           "description": "",
-          "price": "20 د.ل",
+          "price": "17 د.ل",
           "image": ""
         },
         {
           "name": "صفيحة لحم بالجبنة",
           "description": "",
-          "price": "25 د.ل",
+          "price": "20 د.ل",
           "image": ""
         },
         {
@@ -488,6 +488,12 @@
           "name": "نص كيلو صفيحة لحم",
           "description": "",
           "price": "50 د.ل",
+          "image": ""
+        },
+        {
+          "name": "ربع كيلو صفيحة لحم",
+          "description": "",
+          "price": "25 د.ل",
           "image": ""
         }
       ]
@@ -595,6 +601,52 @@
           "description": "",
           "price": "5 د.ل",
           "image": ""
+        }
+      ]
+    },
+    {
+      "section_name": "شاورما",
+      "items": [
+        {
+          "name": "شاورما عادية",
+          "description": "",
+          "price": "10 د.ل",
+          "image": ""
+        },
+        {
+          "name": "شاورما بالجبنة",
+          "description": "",
+          "price": "11 د.ل",
+          "image": ""
+        },
+        {
+          "name": "شاورما دبل فطيرة",
+          "description": "",
+          "price": "11 د.ل",
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795019057816_582.jpg"
+        }
+      ]
+    },
+    {
+      "section_name": "مشروبات",
+      "items": [
+        {
+          "name": "مشروب غازي",
+          "description": "",
+          "price": "4 د.ل",
+          "image": ""
+        },
+        {
+          "name": "مشروب جرين",
+          "description": "",
+          "price": "5 د.ل",
+          "image": ""
+        },
+        {
+          "name": "مشروب العين",
+          "description": "",
+          "price": "3 د.ل",
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795019059983_443.jpg"
         }
       ]
     }
