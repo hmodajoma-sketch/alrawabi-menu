@@ -405,7 +405,7 @@
           "name": "وجبة فتة استربس",
           "description": "",
           "price": "25 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795034942461_26.jpg"
         },
         {
           "name": "وجبة ناتشوز بطاطا",
@@ -529,7 +529,7 @@
           "name": "بيتزا دجاج",
           "description": "",
           "price": "26 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795034940286_665.jpg"
         },
         {
           "name": "بيتزا مشكل",
