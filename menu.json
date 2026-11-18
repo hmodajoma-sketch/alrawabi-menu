@@ -399,7 +399,7 @@
           "name": "وجبة استربس",
           "description": "",
           "price": "30 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795036908654_296.jpg"
         },
         {
           "name": "وجبة فتة استربس",
@@ -600,7 +600,7 @@
           "name": "صحن شوربة",
           "description": "",
           "price": "5 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795036906619_764.jpg"
         }
       ]
     },
@@ -641,7 +641,7 @@
           "name": "بوكس شاورما اكسترا",
           "description": "",
           "price": "25 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795036910064_863.jpg"
         }
       ]
     },
