@@ -778,7 +778,7 @@
           "name": "كيلو شيش طاووق",
           "description": "(10 أسياخ - رز - بطاطا)",
           "price": "110 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795037515710_610.jpg"
         },
         {
           "name": "نص كيلو شيش طاووق",
@@ -790,7 +790,7 @@
           "name": "كيلو كباب دجاج",
           "description": "(14 سيخ - رز - بطاطا)",
           "price": "110 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795037517210_324.jpg"
         },
         {
           "name": "نصف كيلو كباب دجاج",
@@ -996,7 +996,7 @@
           "name": "وجبة فتة شاورما",
           "description": "",
           "price": "30 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795037506706_394.jpg"
         }
       ]
     },
@@ -1037,19 +1037,19 @@
           "name": "وجبة استربس",
           "description": "",
           "price": "35 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795037508783_207.jpg"
         },
         {
           "name": "وجبة فتة استربس",
           "description": "",
           "price": "30 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795037510549_920.jpg"
         },
         {
           "name": "وجبة ناتشوز بطاطا",
           "description": "",
           "price": "30 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795037514145_819.jpg"
         }
       ]
     },
