@@ -630,6 +630,18 @@
           "description": "",
           "price": "15 د.ل",
           "image": ""
+        },
+        {
+          "name": "شاورما عربي",
+          "description": "",
+          "price": "15 د.ل",
+          "image": ""
+        },
+        {
+          "name": "بوكس شاورما اكسترا",
+          "description": "",
+          "price": "25 د.ل",
+          "image": ""
         }
       ]
     },
