@@ -725,13 +725,13 @@
           "name": "وجبة سوشي كباب لحم",
           "description": "",
           "price": "35 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795109692055_962.jpg"
         },
         {
           "name": "وجبة سوشي كباب لحم بالجبنة",
           "description": "",
           "price": "40 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795109693797_272.jpg"
         }
       ]
     },
@@ -771,8 +771,8 @@
         {
           "name": "وجبة كفتة بالدجاج",
           "description": "(رز - بطاطا)",
-          "price": "40 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795109605957_435.jpg"
+          "price": "35 د.ل",
+          "image": ""
         },
         {
           "name": "كيلو شيش طاووق",
@@ -807,7 +807,7 @@
           "name": "وجبة مشكل صغير",
           "description": "(3 أسياخ - رز - بطاطا)",
           "price": "35 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795109689685_736.jpg"
         },
         {
           "name": "وجبة مشكل صغير بالمكسرات",
