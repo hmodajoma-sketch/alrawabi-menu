@@ -172,6 +172,12 @@
           "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795109196355_918.jpg"
         },
         {
+          "name": "وجبة مشكل صغير بالمكسرات",
+          "description": "(3 أسياخ - رز - بطاطا)",
+          "price": "40 د.ل",
+          "image": ""
+        },
+        {
           "name": "وجبة مشكل كبير",
           "description": "(5 أسياخ - رز - بطاطا)",
           "price": "60 د.ل",
@@ -187,7 +193,7 @@
           "name": "نص كيلو مشكل الروابي",
           "description": "(7 أسياخ - رز - بطاطا)",
           "price": "80 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795110262650_257.jpg"
+          "image": ""
         },
         {
           "name": "كيلو مشكل الروابي بالمكسرات",
@@ -211,12 +217,6 @@
           "name": "سفرة مشكل الروابي",
           "description": "(18 أسياخ - رز - بطاطا - نص دجاجة)",
           "price": "250 د.ل",
-          "image": ""
-        },
-        {
-          "name": "وجبة مشكل صغير بالمكسرات",
-          "description": "(3 أسياخ - رز - بطاطا)",
-          "price": "40 د.ل",
           "image": ""
         }
       ]
@@ -831,7 +831,7 @@
           "name": "نص كيلو مشكل الروابي",
           "description": "(7 أسياخ - رز - بطاطا)",
           "price": "80 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795110349149_958.jpg"
         },
         {
           "name": "كيلو مشكل الروابي بالمكسرات",
@@ -978,7 +978,7 @@
           "name": "صحن شاورما عربي",
           "description": "",
           "price": "45 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795110346708_183.jpg"
         },
         {
           "name": "صحن شاورما عربي مع شرائح",
