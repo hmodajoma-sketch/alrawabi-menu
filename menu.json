@@ -1096,7 +1096,7 @@
           "name": "لفايف كباب لحم",
           "description": "",
           "price": "25 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795106770487_464.jpg"
         },
         {
           "name": "كورنو",
@@ -1206,13 +1206,13 @@
         },
         {
           "name": "كبة مشوية",
-          "description": "",
+          "description": "قطعة",
           "price": "8 د.ل",
           "image": ""
         },
         {
           "name": "صحن كبة مقلية",
-          "description": "",
+          "description": "3 قطع",
           "price": "20 د.ل",
           "image": ""
         },
