@@ -689,7 +689,7 @@
           "name": "وجبة كفتة لحم",
           "description": "",
           "price": "45 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187093097_563.jpg"
         },
         {
           "name": "وجبة كباب لحم بالجبنه",
@@ -742,13 +742,13 @@
           "name": "وجبة شيش طاووق",
           "description": "(3 أسياخ - رز - بطاطا)",
           "price": "35 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187095607_301.jpg"
         },
         {
           "name": "وجبة كباب دجاج",
           "description": "(3 أسياخ - رز - بطاطا)",
           "price": "30 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187097443_413.jpg"
         },
         {
           "name": "وجبة جناوح دجاج",
@@ -813,7 +813,7 @@
           "name": "وجبة مشكل صغير بالمكسرات",
           "description": "(3 أسياخ - رز - بطاطا)",
           "price": "40 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187099088_624.jpg"
         },
         {
           "name": "وجبة مشكل كبير",
@@ -825,7 +825,7 @@
           "name": "كيلو مشكل الروابي",
           "description": "(14 أسياخ - رز - بطاطا)",
           "price": "150 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187100816_243.jpg"
         },
         {
           "name": "نص كيلو مشكل الروابي",
@@ -1066,7 +1066,7 @@
           "name": "مقلوبة دجاج",
           "description": "",
           "price": "20 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187102460_933.jpg"
         },
         {
           "name": "مقلوبة لحم",
@@ -1102,7 +1102,7 @@
           "name": "كورنو",
           "description": "",
           "price": "25 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187104304_356.jpg"
         },
         {
           "name": "صفيحة لحم",
@@ -1214,7 +1214,7 @@
           "name": "صحن كبة مقلية",
           "description": "",
           "price": "20 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187105836_423.jpg"
         },
         {
           "name": "صحن بطاطا",
@@ -1249,7 +1249,7 @@
           "name": "شاورما اكسترا",
           "description": "",
           "price": "18 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795187107493_167.jpg"
         },
         {
           "name": "شاورما عربي",
