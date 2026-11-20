@@ -21,7 +21,7 @@
           "name": "وجبة كفتة لحم",
           "description": "",
           "price": "45 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795185602098_86.jpg"
         },
         {
           "name": "وجبة كباب لحم بالجبنه",
@@ -175,7 +175,7 @@
           "name": "وجبة مشكل صغير بالمكسرات",
           "description": "(3 أسياخ - رز - بطاطا)",
           "price": "40 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795185590262_662.jpg"
         },
         {
           "name": "وجبة مشكل كبير",
@@ -187,7 +187,7 @@
           "name": "كيلو مشكل الروابي",
           "description": "(14 أسياخ - رز - بطاطا)",
           "price": "150 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795185592278_381.jpg"
         },
         {
           "name": "نص كيلو مشكل الروابي",
@@ -217,7 +217,7 @@
           "name": "سفرة مشكل الروابي",
           "description": "(18 أسياخ - رز - بطاطا - نص دجاجة)",
           "price": "250 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795185594134_838.jpg"
         }
       ]
     },
@@ -422,7 +422,7 @@
           "name": "مقلوبة دجاج",
           "description": "",
           "price": "20 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795185596054_495.jpg"
         },
         {
           "name": "مقلوبة لحم",
@@ -570,7 +570,7 @@
           "name": "كبة مقلية",
           "description": "",
           "price": "6 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795185600060_944.jpg"
         },
         {
           "name": "صحن رز",
@@ -623,7 +623,7 @@
           "name": "شاورما اكسترا",
           "description": "",
           "price": "15 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795185598002_39.jpg"
         },
         {
           "name": "شاورما عربي",
