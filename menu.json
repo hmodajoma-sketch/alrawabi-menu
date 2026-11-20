@@ -440,7 +440,7 @@
           "name": "باقيت دجاج",
           "description": "",
           "price": "23 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795183760121_1.jpg"
         },
         {
           "name": "تشيز ملفوف",
@@ -736,13 +736,13 @@
           "name": "وجبة شيش طاووق",
           "description": "(3 أسياخ - رز - بطاطا)",
           "price": "35 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795183665398_967.jpg"
+          "image": ""
         },
         {
           "name": "وجبة كباب دجاج",
           "description": "(3 أسياخ - رز - بطاطا)",
           "price": "30 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795183667397_998.jpg"
+          "image": ""
         },
         {
           "name": "وجبة جناوح دجاج",
