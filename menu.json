@@ -440,7 +440,7 @@
           "name": "باقيت دجاج",
           "description": "",
           "price": "23 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795183760121_1.jpg"
+          "image": ""
         },
         {
           "name": "تشيز ملفوف",
@@ -605,13 +605,13 @@
           "name": "شاورما عادية",
           "description": "",
           "price": "10 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795183833846_490.jpg"
         },
         {
           "name": "شاورما بالجبنة",
           "description": "",
           "price": "11 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795183835750_727.jpg"
         },
         {
           "name": "شاورما دبل فطيرة",
