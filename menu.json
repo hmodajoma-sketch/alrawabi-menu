@@ -753,7 +753,7 @@
         {
           "name": "وجبة كباب دجاج بالجبنه",
           "description": "",
-          "price": "40 د.ل",
+          "price": "45 د.ل",
           "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795287591325_926.jpg"
         },
         {
@@ -966,7 +966,7 @@
           "name": "وجبة شاورما شرائح",
           "description": "",
           "price": "40 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795287779302_20.jpg"
+          "image": ""
         },
         {
           "name": "صحن شاورما عربي",
