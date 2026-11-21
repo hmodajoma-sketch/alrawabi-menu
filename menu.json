@@ -431,12 +431,6 @@
           "image": ""
         },
         {
-          "name": "باقيت لحم",
-          "description": "",
-          "price": "30 د.ل",
-          "image": ""
-        },
-        {
           "name": "باقيت دجاج",
           "description": "",
           "price": "23 د.ل",
@@ -446,7 +440,7 @@
           "name": "تشيز ملفوف",
           "description": "",
           "price": "27 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795280646891_539.jpg"
         },
         {
           "name": "لفايف كباب لحم",
@@ -470,7 +464,7 @@
           "name": "صفيحة لحم بالجبنة",
           "description": "",
           "price": "20 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795280648888_380.jpg"
         },
         {
           "name": "صفيحة جبنة",
