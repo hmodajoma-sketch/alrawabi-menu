@@ -27,7 +27,7 @@
           "name": "وجبة كباب لحم بالجبنه",
           "description": "",
           "price": "50 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286535290_265.jpg"
         },
         {
           "name": "وجبة ليالي بالجبنة والمكسرات",
@@ -228,7 +228,7 @@
           "name": "شيش طاووق بالجبنة",
           "description": "",
           "price": "11 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286531849_727.jpg"
         },
         {
           "name": "كباب لحم",
@@ -328,7 +328,7 @@
           "name": "وجبة شاورما شرائح",
           "description": "(رز - بطاطا)",
           "price": "35 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286527414_628.jpg"
         },
         {
           "name": "صحن شاورما عربي",
@@ -576,7 +576,7 @@
           "name": "صحن رز",
           "description": "",
           "price": "10 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286416745_209.jpg"
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286524697_566.jpg"
         },
         {
           "name": "صحن رز جربي",
