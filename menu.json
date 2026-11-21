@@ -27,7 +27,7 @@
           "name": "وجبة كباب لحم بالجبنه",
           "description": "",
           "price": "50 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286184319_61.jpg"
+          "image": ""
         },
         {
           "name": "وجبة ليالي بالجبنة والمكسرات",
@@ -228,7 +228,7 @@
           "name": "شيش طاووق بالجبنة",
           "description": "",
           "price": "11 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286188630_99.jpg"
+          "image": ""
         },
         {
           "name": "كباب لحم",
@@ -564,7 +564,7 @@
           "name": "كبة مشوية",
           "description": "",
           "price": "8 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286209914_689.jpg"
         },
         {
           "name": "كبة مقلية",
