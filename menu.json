@@ -98,7 +98,7 @@
           "name": "وجبة كباب دجاج بالجبنه",
           "description": "",
           "price": "45 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286811262_950.jpg"
         },
         {
           "name": "وجبة نص دجاج مشوية",
@@ -234,13 +234,13 @@
           "name": "كباب لحم",
           "description": "",
           "price": "10 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286813389_387.jpg"
         },
         {
           "name": "كباب دجاج",
           "description": "",
           "price": "9 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795286815231_415.jpg"
         },
         {
           "name": "كباب لحم دبل سيخ",
