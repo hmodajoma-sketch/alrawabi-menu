@@ -488,13 +488,13 @@
           "name": "نص كيلو صفيحة لحم",
           "description": "",
           "price": "50 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795278161897_357.jpg"
+          "image": ""
         },
         {
           "name": "ربع كيلو صفيحة لحم",
           "description": "",
           "price": "25 د.ل",
-          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795278163631_517.jpg"
+          "image": ""
         }
       ]
     },
