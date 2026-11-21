@@ -104,7 +104,7 @@
           "name": "وجبة نص دجاج مشوية",
           "description": "(رز - بطاطا)",
           "price": "30 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795283784493_825.jpg"
         },
         {
           "name": "وجبة دجاجة كاملة مشوية",
@@ -134,7 +134,7 @@
           "name": "نص كيلو شيش طاووق",
           "description": "(5 أسياخ - رز - بطاطا)",
           "price": "60 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795283786343_617.jpg"
         },
         {
           "name": "كيلو كباب دجاج",
@@ -146,7 +146,7 @@
           "name": "نصف كيلو كباب دجاج",
           "description": "(7 أسياخ - رز - بطاطا)",
           "price": "60 د.ل",
-          "image": ""
+          "image": "https://raw.githubusercontent.com/hmodajoma-sketch/alrawabi-menu/main/images/img_1795283787976_917.jpg"
         },
         {
           "name": "وجبة شيش طاووق سيخين",
